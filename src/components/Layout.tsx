@@ -1,7 +1,8 @@
 import type { PropsWithChildren } from 'react'
-import { lazy, Suspense } from 'react'
+import { lazy, memo, Suspense } from 'react'
 
-const BackgroundScene = lazy(() => import('./BackgroundScene'))
+// Memoized to prevent re-rendering the heavy 3D scene on route changes
+const BackgroundScene = memo(lazy(() => import('./BackgroundScene')))
 
 export function Layout({ children }: PropsWithChildren) {
   return (
