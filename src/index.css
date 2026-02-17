@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ivory: 246 241 232;
+  --color-panel: 251 248 240;
+  --color-graphite: 42 44 45;
+  --color-gold: 165 141 92;
+  --color-gold-dark: 126 107 62;
+  --color-border: 215 206 185;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.6;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(165, 141, 92, 0.08), transparent 42%),
+    radial-gradient(circle at 18% 78%, rgba(69, 72, 75, 0.05), transparent 46%),
+    rgb(var(--color-ivory));
+  color: rgb(var(--color-graphite));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(165, 141, 92, 0.25);
+}
+
+@layer components {
+  .noble-card {
+    @apply rounded-2xl border border-border/70 bg-ivory/80 shadow-soft backdrop-blur-[2px];
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ivory;
+  }
+
+  .accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 700ms cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+  }
+
+  .accordion-content[data-open="true"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content {
+    transition-duration: 0.01ms !important;
+  }
+}
