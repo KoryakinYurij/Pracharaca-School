@@ -12,10 +12,12 @@ interface QACardProps {
 export function QACard({ card, index }: QACardProps) {
   const [isOpen, setIsOpen] = useState(false)
   const contentId = useId()
+  const buttonId = useId()
 
   return (
     <article className="noble-card overflow-hidden">
       <button
+        id={buttonId}
         type="button"
         aria-expanded={isOpen}
         aria-controls={contentId}
@@ -39,6 +41,8 @@ export function QACard({ card, index }: QACardProps) {
 
       <div
         id={contentId}
+        role="region"
+        aria-labelledby={buttonId}
         className="accordion-content"
         data-open={isOpen}
       >
