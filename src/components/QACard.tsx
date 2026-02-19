@@ -13,13 +13,50 @@ export function QACard({ card, index }: QACardProps) {
   const [isOpen, setIsOpen] = useState(false)
   const contentId = useId()
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const key = e.key
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(key)) return
+
+    e.preventDefault()
+
+    const trigger = e.currentTarget
+    const container = trigger.closest('section')
+    if (!container) return
+
+    const triggers = Array.from(container.querySelectorAll<HTMLButtonElement>('button[data-qa-trigger]'))
+    const currentIndex = triggers.indexOf(trigger)
+
+    if (currentIndex === -1) return
+
+    let nextIndex = currentIndex
+
+    switch (key) {
+      case 'ArrowDown':
+        nextIndex = (currentIndex + 1) % triggers.length
+        break
+      case 'ArrowUp':
+        nextIndex = (currentIndex - 1 + triggers.length) % triggers.length
+        break
+      case 'Home':
+        nextIndex = 0
+        break
+      case 'End':
+        nextIndex = triggers.length - 1
+        break
+    }
+
+    triggers[nextIndex]?.focus()
+  }
+
   return (
     <article className="noble-card overflow-hidden">
       <button
         type="button"
         aria-expanded={isOpen}
         aria-controls={contentId}
+        data-qa-trigger
         onClick={() => setIsOpen((prev) => !prev)}
+        onKeyDown={handleKeyDown}
         className="focus-ring flex w-full items-start gap-4 px-5 py-5 text-left sm:gap-5 sm:px-6 sm:py-6"
       >
         <span className="text-sm font-semibold text-gold-dark/70">
