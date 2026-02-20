@@ -14,7 +14,7 @@ export function Header({ subtitle, title, description }: HeaderProps) {
         {subtitle}
       </div>
 
-      <h1 className="font-display text-4xl leading-tight text-graphite sm:text-5xl">{title}</h1>
+      <h1 className="display-heading-rhythm font-display text-4xl text-graphite sm:text-5xl">{title}</h1>
 
       <p className="max-w-3xl text-base text-graphite/80 sm:text-lg">{description}</p>
     </header>
