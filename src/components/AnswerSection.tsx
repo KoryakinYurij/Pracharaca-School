@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { memo } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
   AlertTriangle,
@@ -136,7 +137,7 @@ function renderBodyByKind(section: AnswerSectionData) {
   }
 }
 
-export function AnswerSection({ section }: AnswerSectionProps) {
+export const AnswerSection = memo(function AnswerSection({ section }: AnswerSectionProps) {
   const meta = sectionMeta[section.kind]
   const Icon = meta.icon
   const iconColor = (section.kind === 'warning' || section.kind === 'pitfalls') ? 'text-amber-700/70' : 'text-gold/80'
@@ -150,4 +151,4 @@ export function AnswerSection({ section }: AnswerSectionProps) {
       {renderBodyByKind(section)}
     </section>
   )
-}
+})
