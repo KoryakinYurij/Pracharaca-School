@@ -1,0 +1,50 @@
+{
+  "url": "/topic/krasivyi-konspekt/lesson/noble-basics",
+  "reducedMotion": true,
+  "cardContainerCount": 7,
+  "hiddenLikeContainerCount": 0,
+  "containers": [
+    {
+      "index": 1,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 2,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 3,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 4,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 5,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 6,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    },
+    {
+      "index": 7,
+      "opacity": "1",
+      "transform": "none",
+      "transitionDuration": "0s"
+    }
+  ]
+}

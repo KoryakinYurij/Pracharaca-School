@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-02-20T09:48:13.879Z",
+  "baseUrl": "http://127.0.0.1:4173",
+  "parallaxMaxOffset": 0.038,
+  "normal": {
+    "hashA": "22e68658ce93d15d2870b48bccf846f74fef6b705070acd9382fe2cee81dbf3d",
+    "hashB": "f27e4df90dc206859b4cdd097197632ddce3e230f4264fc4e2667a9fd6c7ecd1",
+    "identicalFrames": false
+  },
+  "reduced": {
+    "hashA": "d968996aa97038554256be481b967be2db5b406cb7882f66a4d3fe3ae8f1157d",
+    "hashB": "d968996aa97038554256be481b967be2db5b406cb7882f66a4d3fe3ae8f1157d",
+    "identicalFrames": true
+  },
+  "assertions": {
+    "normalShowsMotion": true,
+    "reducedRemainsStatic": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "initialState": "false",
+  "action": "double-click from closed state",
+  "expectedFinalState": "false",
+  "finalState": "false",
+  "openCount": 0,
+  "consoleErrors": []
+}
