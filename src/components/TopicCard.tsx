@@ -13,7 +13,7 @@ export function TopicCard({ topic }: TopicCardProps) {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <motion.article whileHover={prefersReducedMotion ? undefined : { y: -3 }} transition={{ duration: 0.2 }}>
+    <motion.article whileHover={prefersReducedMotion ? undefined : { y: -2 }} transition={{ duration: 0.2 }}>
       <Link
         to={`/topic/${topic.slug}`}
         className={clsx(
