@@ -135,6 +135,17 @@ export function BackgroundShapes() {
         sceneGroup.rotation.set(0, 0, 0)
       }
 
+      SHAPES.forEach((shape, index) => {
+        const group = groupRefs.current[index]
+
+        if (!group) {
+          return
+        }
+
+        group.position.set(shape.position[0], shape.position[1], shape.position[2])
+        group.rotation.set(0, 0, 0)
+      })
+
       return
     }
 
