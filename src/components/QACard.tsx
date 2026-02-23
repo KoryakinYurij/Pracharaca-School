@@ -54,11 +54,14 @@ export function QACard({ card, index }: QACardProps) {
         id={contentId}
         className="accordion-content"
         data-open={isOpen}
+        inert={!isOpen}
+        aria-hidden={!isOpen}
       >
         <div className="overflow-hidden">
           <div
             className={clsx(
-              'space-y-3 border-t border-border/70 px-5 py-5 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:transform-none motion-reduce:transition-none sm:px-6 sm:py-6',
+              'space-y-3 border-t border-border/70 px-5 py-5 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none motion-reduce:transition-none sm:px-6 sm:py-6',
+              isOpen && 'will-change-transform',
               isOpen ? 'translate-y-0' : 'translate-y-2',
             )}
           >
