@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -15,21 +16,28 @@ export function TopicCard({ topic }: TopicCardProps) {
     <motion.article whileHover={prefersReducedMotion ? undefined : { y: -3 }} transition={{ duration: 0.2 }}>
       <Link
         to={`/topic/${topic.slug}`}
-        className="focus-ring noble-card group block p-6 transition-shadow hover:shadow-card sm:p-7"
+        className={clsx(
+          'focus-ring noble-card group block p-6 hover:border-gold/30 hover:shadow-card focus-visible:border-gold/35 sm:p-7',
+          !prefersReducedMotion && 'transition-[border-color,box-shadow] duration-200',
+        )}
       >
         <span className="mb-2 block text-sm font-semibold text-gold-dark">
           {String(topic.order).padStart(2, '0')}
         </span>
 
         <div className="flex min-w-0 items-start justify-between gap-4">
-          <h2 className="min-w-0 break-words font-display text-2xl leading-tight text-graphite">{topic.title}</h2>
+          <h2 className="display-card-title-rhythm min-w-0 break-words font-display text-2xl text-graphite">{topic.title}</h2>
           <ArrowUpRight
             aria-hidden="true"
-            className="mt-1 h-5 w-5 shrink-0 text-gold/65 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            className={clsx(
+              'mt-1 h-5 w-5 shrink-0 text-gold/65',
+              !prefersReducedMotion &&
+                'transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:scale-105 group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:scale-105',
+            )}
           />
         </div>
 
-        <p className="mt-4 line-clamp-3 text-sm text-graphite/75 sm:text-base">{topic.description}</p>
+        <p className="mt-4 line-clamp-3 text-base text-graphite/75">{topic.description}</p>
 
         <p className="mt-5 text-xs font-medium uppercase tracking-[0.14em] text-graphite/70">
           {pluralizeRu(topic.lessonCount, ['урок', 'урока', 'уроков'])}

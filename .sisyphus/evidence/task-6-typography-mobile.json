@@ -1,0 +1,44 @@
+{
+  "capturedAt": "2026-02-20T09:25:09.216Z",
+  "route": "/topic/krasivyi-konspekt",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "heading": {
+    "selector": "h1",
+    "text": "Красивый конспект",
+    "fontSize": "36px",
+    "lineHeight": "40px",
+    "letterSpacing": "-0.648px"
+  },
+  "firstLessonCardTitle": {
+    "selector": "article h2",
+    "text": "Основа благородного конспекта",
+    "fontSize": "24px",
+    "lineHeight": "32px",
+    "letterSpacing": "-0.336px"
+  },
+  "body": {
+    "selector": "body",
+    "text": "Локальный формат обученияКрасивый конспектТихая система заметок в благородном минимализме: уроки, карточки вопросов и яс",
+    "fontSize": "16px",
+    "lineHeight": "25.6px",
+    "letterSpacing": "normal"
+  },
+  "headerDescription": {
+    "selector": "header p",
+    "text": "Тихая система заметок в благородном минимализме: уроки, карточки вопросов и ясные ответы. Без лишней механики, только сп",
+    "fontSize": "16px",
+    "lineHeight": "24px",
+    "letterSpacing": "normal"
+  },
+  "firstLessonCardIntro": {
+    "selector": "article p",
+    "text": "Как превратить заметки в спокойную систему, которую приятно перечитывать через неделю и через месяц.",
+    "fontSize": "16px",
+    "lineHeight": "24px",
+    "letterSpacing": "normal"
+  },
+  "bodyFontSizeMinPx": 16
+}

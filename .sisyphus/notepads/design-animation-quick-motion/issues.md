@@ -1,0 +1,1 @@
+- 2026-02-20: F3 edge-case failure remains in Task 6 mobile readability check - first revealed answer text computes to 14px (`.sisyphus/evidence/final-qa/task-6-typography-mobile.json`) vs expected >=16px threshold.

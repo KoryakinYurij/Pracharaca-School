@@ -1,0 +1,56 @@
+{
+  "url": "http://127.0.0.1:4173/topic/krasivyi-konspekt/lesson/noble-basics",
+  "keyboardChecks": {
+    "enterOpens": true,
+    "spaceCloses": true
+  },
+  "finalAriaExpanded": "true",
+  "answerTransform": "matrix(1, 0, 0, 1, 0, 0)",
+  "cardStyles": {
+    "borderColor": "rgba(165, 141, 92, 0.45)",
+    "backgroundColor": "rgba(251, 248, 240, 0.85)",
+    "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(34, 34, 34, 0.4) 0px 20px 45px -36px"
+  },
+  "states": [
+    {
+      "action": "initial",
+      "ariaExpanded": "false",
+      "timeMs": 5
+    },
+    {
+      "action": "after-enter",
+      "ariaExpanded": "true",
+      "timeMs": 278
+    },
+    {
+      "action": "after-space",
+      "ariaExpanded": "false",
+      "timeMs": 560
+    },
+    {
+      "action": "rapid-click-1",
+      "ariaExpanded": "true",
+      "timeMs": 895
+    },
+    {
+      "action": "rapid-click-2",
+      "ariaExpanded": "false",
+      "timeMs": 1196
+    },
+    {
+      "action": "rapid-click-3",
+      "ariaExpanded": "true",
+      "timeMs": 1519
+    },
+    {
+      "action": "rapid-click-4",
+      "ariaExpanded": "false",
+      "timeMs": 1820
+    },
+    {
+      "action": "final-open",
+      "ariaExpanded": "true",
+      "timeMs": 2749
+    }
+  ]
+}

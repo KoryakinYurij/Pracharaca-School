@@ -1,0 +1,46 @@
+# Guardrail Scan - Forbidden Features Check
+# Date: 2026-02-20
+# Task: 11 - Guardrail scan for forbidden scope
+
+========================================
+# SCAN PARAMETERS
+========================================
+
+Target: src/**/*.tsx, src/**/*.ts, src/**/*.css
+Forbidden Patterns (from constraints.md and plan):
+- Dark mode: dark mode, DarkMode, dark-mode
+- Progress indicators: progress bar, ProgressBar, sticky progress
+- Visual forbidden: neon, bloom, postprocessing, particle
+- Heavy effects: gradient, shadow-2xl, shadow-3xl
+
+========================================
+# SEARCH RESULTS
+========================================
+
+## Dark Mode Search
+Pattern: dark.*mode|DarkMode|progress.*bar|ProgressBar|sticky.*progress
+Result: No matches found
+
+## Visual Effects Search
+Pattern: neon|bloom|postprocessing|particle
+Result: No matches found
+
+## Heavy Effects Search
+Pattern: gradient|shadow-2xl|shadow-3xl
+Result: No matches found
+
+========================================
+# GUARDRAIL VERDICT
+========================================
+
+✅ PASS - No forbidden features detected
+✅ No dark mode implementation
+✅ No progress bar/tracking implementation
+✅ No neon/bloom/postprocessing/particle effects
+✅ No gradients or heavy shadows
+
+The codebase maintains compliance with:
+- docs/constraints.md - Visual and technical restrictions
+- .sisyphus/plans/design-animation-quick-motion.md - Must NOT Have guardrails
+
+SCAN COMPLETE: 0 violations found

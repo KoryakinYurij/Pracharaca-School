@@ -1,0 +1,41 @@
+{
+  "task": "9. Harmonize route transition timing/easing with updated motion system",
+  "status": "complete",
+  "timestamp": "2026-02-20",
+  "verification": {
+    "normal_motion": {
+      "duration": 0.38,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "enter_y_shift": 10,
+      "exit_y_shift": -8,
+      "transition_type": "fade + y-shift",
+      "routes_tested": [
+        "/ -> /topic/krasivyi-konspekt",
+        "/topic/krasivyi-konspekt -> /topic/krasivyi-konspekt/lesson/01-noble-basics"
+      ],
+      "result": "smooth and subtle"
+    },
+    "reduced_motion": {
+      "duration": 0.15,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "enter_y_shift": 0,
+      "exit_y_shift": 0,
+      "transition_type": "instant (no animation)",
+      "result": "short and non-disorienting"
+    }
+  },
+  "alignment_with_card_motion": {
+    "qacard_duration": 0.7,
+    "page_transition_duration": 0.38,
+    "easing_match": "cubic-bezier(0.22, 1, 0.36, 1) - exact match",
+    "conclusion": "timing feels coherent with card/accordion motion"
+  },
+  "evidence_files": [
+    ".sisyphus/evidence/task-9-homepage.png",
+    ".sisyphus/evidence/task-9-topic-page.png",
+    ".sisyphus/evidence/task-9-lesson-page.png",
+    ".sisyphus/evidence/task-9-reduced-homepage.png",
+    ".sisyphus/evidence/task-9-reduced-topic.png",
+    ".sisyphus/evidence/task-9-reduced-lesson.png"
+  ]
+}
