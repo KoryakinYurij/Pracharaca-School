@@ -20,10 +20,11 @@ export function QACard({ card, index }: QACardProps) {
         isOpen && 'border-gold/45 bg-panel/85 shadow-card',
       )}
     >
-      <button
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls={contentId}
+      <h3>
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls={contentId}
         onClick={() => setIsOpen((prev) => !prev)}
         className={clsx(
           'focus-ring flex w-full items-start gap-4 px-5 py-5 text-left transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:gap-5 sm:px-6 sm:py-6',
@@ -48,7 +49,8 @@ export function QACard({ card, index }: QACardProps) {
           )}
           aria-hidden="true"
         />
-      </button>
+        </button>
+      </h3>
 
       <div
         id={contentId}
