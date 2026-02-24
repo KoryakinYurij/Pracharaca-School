@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-route
 import { Layout } from './components/Layout'
 import { PageTransition } from './components/PageTransition'
 import { ScrollToTop } from './components/ScrollToTop'
+import { ContentKitchenSink } from './pages/ContentKitchenSink'
 import { LessonPage } from './pages/LessonPage'
 import { TopicPage } from './pages/TopicPage'
 import { TopicsListingPage } from './pages/TopicsListingPage'
@@ -40,6 +41,14 @@ function AppContent() {
             }
           />
           <Route path="/lesson/*" element={<Navigate to="/" replace />} />
+          <Route
+            path="/kitchen-sink"
+            element={
+              <PageTransition>
+                <ContentKitchenSink />
+              </PageTransition>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
