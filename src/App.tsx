@@ -7,11 +7,11 @@ import { LessonPage } from './pages/LessonPage'
 import { TopicPage } from './pages/TopicPage'
 import { TopicsListingPage } from './pages/TopicsListingPage'
 
-function AppRoutes() {
+function AppContent() {
   const location = useLocation()
 
   return (
-    <Layout>
+    <>
       <ScrollToTop />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -43,14 +43,16 @@ function AppRoutes() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
-    </Layout>
+    </>
   )
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <AppRoutes />
+      <Layout>
+        <AppContent />
+      </Layout>
     </BrowserRouter>
   )
 }
