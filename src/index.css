@@ -85,6 +85,26 @@ body {
   }
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-ivory));
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-gold) / 0.5);
+  border: 2px solid rgb(var(--color-ivory));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-gold) / 0.8);
+}
+
 @media (min-width: 640px) {
   .display-heading-rhythm {
     line-height: 1.1;

@@ -26,7 +26,7 @@ export function QACard({ card, index }: QACardProps) {
         aria-controls={contentId}
         onClick={() => setIsOpen((prev) => !prev)}
         className={clsx(
-          'focus-ring flex w-full items-start gap-4 px-5 py-5 text-left transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:gap-5 sm:px-6 sm:py-6',
+          'focus-ring flex w-full items-start gap-4 px-5 py-5 text-left transition-[background-color,color,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98] active:duration-100 sm:gap-5 sm:px-6 sm:py-6',
           isOpen && 'bg-panel/40',
         )}
       >
