@@ -1,7 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useReducedMotion } from 'framer-motion'
-import { useEffect, useRef } from 'react'
-import type { Group } from 'three'
+import { useEffect, useMemo, useRef } from 'react'
+import { DodecahedronGeometry, type Group, IcosahedronGeometry, OctahedronGeometry } from 'three'
 
 type GeometryKind = 'icosahedron' | 'octahedron' | 'dodecahedron'
 
@@ -87,18 +87,6 @@ const SHAPES: ShapeConfig[] = [
   },
 ]
 
-function ShapeGeometry({ geometry }: { geometry: GeometryKind }) {
-  if (geometry === 'icosahedron') {
-    return <icosahedronGeometry args={[1, 0]} />
-  }
-
-  if (geometry === 'octahedron') {
-    return <octahedronGeometry args={[1, 0]} />
-  }
-
-  return <dodecahedronGeometry args={[1, 0]} />
-}
-
 export function BackgroundShapes() {
   const prefersReducedMotion = useReducedMotion()
   const { invalidate } = useThree()
@@ -106,6 +94,18 @@ export function BackgroundShapes() {
   const groupRefs = useRef<Array<Group | null>>([])
   const pointerTargetRef = useRef({ x: 0, y: 0 })
   const pointerOffsetRef = useRef({ x: 0, y: 0 })
+
+  const geometries = useMemo(() => ({
+    icosahedron: new IcosahedronGeometry(1, 0),
+    octahedron: new OctahedronGeometry(1, 0),
+    dodecahedron: new DodecahedronGeometry(1, 0),
+  }), [])
+
+  useEffect(() => {
+    return () => {
+      Object.values(geometries).forEach((geometry) => geometry.dispose())
+    }
+  }, [geometries])
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -239,8 +239,7 @@ export function BackgroundShapes() {
           position={shape.position}
           scale={shape.scale}
         >
-          <mesh>
-            <ShapeGeometry geometry={shape.geometry} />
+          <mesh geometry={geometries[shape.geometry]}>
             <meshStandardMaterial
               color={shape.color}
               roughness={0.95}
