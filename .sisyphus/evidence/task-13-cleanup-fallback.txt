@@ -1,0 +1,19 @@
+2026-02-24T15:59:15+07:00
+
+> noble-notes@0.0.0 test
+> vitest run src/test/migration-renderers-red.test.tsx
+
+
+ RUN  v4.0.18 /home/fixedies/projects/noble-notes
+
+ ✓ src/test/migration-renderers-red.test.tsx (3 tests) 438ms
+     ✓ supports mixed migrated and fallback sections in one answer without dropping either path  355ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  15:59:16
+   Duration  2.37s (transform 226ms, setup 136ms, import 469ms, tests 438ms, environment 1.05s)
+
+fallback-compare-header-count=1
+fallback-dosdonts-heading-count=1
+fallback-browser-check=pass

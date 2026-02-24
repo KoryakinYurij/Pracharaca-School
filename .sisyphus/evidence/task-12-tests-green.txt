@@ -1,0 +1,23 @@
+
+> noble-notes@0.0.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/home/fixedies/projects/noble-notes[39m
+
+ [32m✓[39m src/test/migration-adapter.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m src/test/migration-map-coverage.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 63[2mms[22m[39m
+ [32m✓[39m src/test/migration-renderers-red.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 645[2mms[22m[39m
+     [33m[2m✓[22m[39m supports mixed migrated and fallback sections in one answer without dropping either path [33m 543[2mms[22m[39m
+Not implemented: Window's scrollTo() method
+ [32m✓[39m src/test/migration-routing-red.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 905[2mms[22m[39m
+     [33m[2m✓[22m[39m shows explicit back navigation from topic page to topics listing [33m 599[2mms[22m[39m
+ [32m✓[39m src/components/QACard.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 1279[2mms[22m[39m
+     [33m[2m✓[22m[39m renders closed state with aria-expanded false [33m 595[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m   Start at [22m 15:40:26
+[2m   Duration [22m 4.26s[2m (transform 1.03s, setup 864ms, import 3.92s, tests 2.94s, environment 8.05s)[22m
+

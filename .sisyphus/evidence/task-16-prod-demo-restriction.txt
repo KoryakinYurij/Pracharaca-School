@@ -1,0 +1,15 @@
+Task 16 - Production mode demo restriction evidence
+Timestamp: 2026-02-24
+Preview base URL: http://127.0.0.1:4173
+
+[Bash route probes]
+- GET / -> HTTP 200
+- GET /kitchen-sink -> HTTP 200 (SPA shell response expected)
+
+[Browser assertions in preview mode]
+- Root page DEV kitchen entry visible: false -> PASS (entry hidden)
+- Navigating to /kitchen-sink final browser path: / -> PASS (guard redirect active)
+- Kitchen sink heading visible after direct /kitchen-sink attempt: false -> PASS (route not exposed)
+- Topics section visible after /kitchen-sink attempt: true -> PASS (redirect target is topics page)
+
+Verdict: PASS - demo entry is hidden and /kitchen-sink is guarded in preview/prod mode.

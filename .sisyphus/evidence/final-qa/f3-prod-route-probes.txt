@@ -1,0 +1,6 @@
+F3 preview/prod route probe
+generated_at=2026-02-24T11:25:08.901Z
+base_url=http://127.0.0.1:4173
+http_root=200
+http_kitchen_sink=200
+note=SPA shell can return 200 for direct paths; browser contract assertions decide pass/fail.

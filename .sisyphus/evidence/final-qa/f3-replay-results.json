@@ -1,0 +1,233 @@
+{
+  "generatedAt": "2026-02-24T11:28:14.714Z",
+  "sources": {
+    "dev": "f3-dev-results.json",
+    "preview": "f3-prod-results.json",
+    "previewRouteProbe": "f3-prod-route-probes.txt",
+    "prodRestriction": "f3-prod-demo-restriction.txt"
+  },
+  "summary": {
+    "scenarios": "9/9",
+    "integration": "PASS",
+    "verdict": "PASS",
+    "total": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "verification": [
+    {
+      "command": "npm run test",
+      "status": "PASS",
+      "evidence": "f3-test.log"
+    },
+    {
+      "command": "npm run build",
+      "status": "PASS",
+      "evidence": "f3-build.log"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "f3-s1-main-topics-back-cta",
+      "category": "integration",
+      "intent": "happy",
+      "title": "Main topics flow and topic back CTA",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-main-topics-back-flow.png"
+      ],
+      "details": {
+        "topicCount": 1,
+        "finalPath": "/",
+        "topicsVisibleAfterBack": true,
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:23:43.002Z"
+    },
+    {
+      "id": "f3-s2-invalid-topic-recovery",
+      "category": "negative",
+      "intent": "error-path",
+      "title": "Unknown topic slug shows recovery navigation",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-topic-invalid-recovery.png"
+      ],
+      "details": {
+        "finalPath": "/",
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:23:44.332Z"
+    },
+    {
+      "id": "f3-s3-lesson-noble-basics-expanded",
+      "category": "integration",
+      "intent": "happy",
+      "title": "Lesson noble-basics expands cards with visible content",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-lesson-noble-basics-expanded.png"
+      ],
+      "details": {
+        "lessonSlug": "noble-basics",
+        "cardResults": [
+          {
+            "card": 1,
+            "expanded": "true",
+            "sectionCount": 3,
+            "contentLength": 421
+          },
+          {
+            "card": 2,
+            "expanded": "true",
+            "sectionCount": 4,
+            "contentLength": 622
+          },
+          {
+            "card": 3,
+            "expanded": "true",
+            "sectionCount": 3,
+            "contentLength": 86
+          }
+        ],
+        "finalPath": "/topic/krasivyi-konspekt/lesson/noble-basics",
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:23:49.023Z"
+    },
+    {
+      "id": "f3-s4-lesson-qa-craft-expanded",
+      "category": "integration",
+      "intent": "happy",
+      "title": "Lesson qa-craft expands cards with visible content",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-lesson-qa-craft-expanded.png"
+      ],
+      "details": {
+        "lessonSlug": "qa-craft",
+        "cardResults": [
+          {
+            "card": 1,
+            "expanded": "true",
+            "sectionCount": 3,
+            "contentLength": 392
+          },
+          {
+            "card": 2,
+            "expanded": "true",
+            "sectionCount": 6,
+            "contentLength": 399
+          },
+          {
+            "card": 3,
+            "expanded": "true",
+            "sectionCount": 3,
+            "contentLength": 434
+          }
+        ],
+        "finalPath": "/topic/krasivyi-konspekt/lesson/qa-craft",
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:23:53.431Z"
+    },
+    {
+      "id": "f3-s5-migrated-renderer-structures",
+      "category": "integration",
+      "intent": "happy",
+      "title": "Migrated renderer structures are visible in lesson cards",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-migrated-renderer-structures.png"
+      ],
+      "details": {
+        "definitionTerms": 3,
+        "summaryCallouts": 2,
+        "stepsItems": 3,
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:23:57.126Z"
+    },
+    {
+      "id": "f3-s6-fallback-renderer-visible-safe",
+      "category": "negative",
+      "intent": "fallback-safety",
+      "title": "Legacy fallback sections stay visible and non-empty",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-fallback-renderer-visible-safe.png"
+      ],
+      "details": {
+        "compareTableRows": 3,
+        "dosDontsColumnHeaders": [
+          "Делай",
+          "Не делай"
+        ],
+        "emptyStateCompare": 0,
+        "emptyStateDosDonts": 0,
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:24:00.900Z"
+    },
+    {
+      "id": "f3-s7-dev-kitchen-sink-entry",
+      "category": "integration",
+      "intent": "happy",
+      "title": "DEV kitchen-sink entry is visible and route is reachable",
+      "status": "PASS",
+      "evidence": [
+        "f3-dev-kitchen-sink-entry.png"
+      ],
+      "details": {
+        "devLinkText": "🔧 DEV: Kitchen Sink Demo",
+        "finalPath": "/kitchen-sink",
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:24:03.736Z"
+    },
+    {
+      "id": "f3-s8-prod-home-hides-dev-entry",
+      "category": "negative",
+      "intent": "prod-guard",
+      "title": "Preview root hides DEV kitchen entry",
+      "status": "PASS",
+      "evidence": [
+        "f3-prod-home-no-dev-entry.png"
+      ],
+      "details": {
+        "finalPath": "/",
+        "devLinkCount": 0,
+        "topicsVisible": true,
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:25:10.125Z"
+    },
+    {
+      "id": "f3-s9-prod-kitchen-route-guarded",
+      "category": "negative",
+      "intent": "prod-guard",
+      "title": "Preview direct /kitchen-sink is guarded at browser contract level",
+      "status": "PASS",
+      "evidence": [
+        "f3-prod-kitchen-guard.png"
+      ],
+      "details": {
+        "finalPath": "/",
+        "kitchenHeadingCount": 0,
+        "devLinkCount": 0,
+        "topicsVisible": true,
+        "consoleErrors": []
+      },
+      "error": null,
+      "recordedAt": "2026-02-24T11:25:11.165Z"
+    }
+  ]
+}

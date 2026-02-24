@@ -1,9 +1,11 @@
 {
-  "active_plan": "/home/fixedies/projects/noble-notes/.sisyphus/plans/design-animation-quick-motion.md",
-  "started_at": "2026-02-20T09:13:01.295Z",
+  "active_plan": "/home/fixedies/projects/noble-notes/.sisyphus/plans/component-migration-tidy.md",
+  "active_task": "F4",
+  "started_at": "2026-02-24T06:40:27.432Z",
   "session_ids": [
-    "ses_385ad1208ffeRxcY5At5I7sQKZ"
+    "ses_3719f4f25ffepzw2PpKP82qADE"
   ],
-  "plan_name": "design-animation-quick-motion",
+  "updated_at": "2026-02-24T12:06:27.000Z",
+  "plan_name": "component-migration-tidy",
   "agent": "atlas"
 }

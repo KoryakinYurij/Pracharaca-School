@@ -1,0 +1,4 @@
+2026-02-24T14:29:06+07:00 npm run test -- src/test/smoke.test.tsx
+- Result: PASS.
+- Test files: 1 passed.
+- Tests: 2 passed, 0 failed.

@@ -1,0 +1,14 @@
+dev_root_topics_label=true
+dev_root_kitchen_link_visible=true
+topic_back_link_visible=true
+topic_back_navigation_to_root=true
+lesson_noble_cards_total=7
+lesson_noble_first3_expanded=3
+lesson_qa_cards_total=7
+lesson_qa_first3_expanded=3
+dev_kitchensink_route_reached=true
+dev_kitchensink_heading_visible=false
+preview_dev_link_hidden=true
+preview_final_path_after_kitchensink=/
+preview_kitchensink_heading_absent=true
+preview_topics_visible_after_guard=true

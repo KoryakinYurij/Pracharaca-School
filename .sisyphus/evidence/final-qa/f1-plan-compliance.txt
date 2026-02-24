@@ -1,0 +1,67 @@
+F1 Plan Compliance Audit
+Plan source: .sisyphus/plans/component-migration-tidy.md
+Audit timestamp: 2026-02-24
+
+Method
+- Audited explicit plan criteria only: Must Have, Must NOT Have, T1-T17 commitments, Final Checklist.
+- Required evidence paths from plan were extracted and existence-checked: 34/34 present.
+- PASS is assigned only when at least one concrete implementation/evidence reference supports the criterion.
+
+Must Have Compliance
+1) PASS - Backward compatibility during migration phase.
+   Evidence: src/content/migrationMap.ts:37, src/content/migrationMap.ts:38, src/components/answerRenderers.tsx:230, .sisyphus/evidence/task-1-migration-map-fallback.txt
+2) PASS - Phased rollout completed in one cycle: compatibility -> full migration -> cleanup.
+   Evidence: .sisyphus/evidence/task-1-migration-map-happy.txt, .sisyphus/evidence/task-10-lesson01-build-check.txt, .sisyphus/evidence/task-11-lesson02-build-check.txt, .sisyphus/evidence/task-13-cleanup-fallback.txt
+3) PASS - TDD workflow for code-impacting tasks.
+   Evidence: .sisyphus/evidence/task-6-red-phase.txt, .sisyphus/evidence/task-12-tests-green.txt, .sisyphus/evidence/task-12-no-skipped-critical.txt
+4) PASS - Agent-executed QA scenarios with evidence paths for each task.
+   Evidence: .sisyphus/plans/component-migration-tidy.md:236, .sisyphus/plans/component-migration-tidy.md:1424, .sisyphus/evidence/task-16-prod-demo-restriction.txt
+
+Must NOT Have Compliance
+1) PASS - No new npm dependencies.
+   Evidence: AGENTS.md:7, AGENTS.md:15, package.json:13, package.json:25
+2) PASS - No CI/Coverage setup in this cycle.
+   Evidence: .sisyphus/plans/component-migration-tidy.md:84, /home/fixedies/projects/noble-notes/.github/workflows (absent), package.json:6
+3) PASS - No hard cut-over before compatibility validation.
+   Evidence: src/content/migrationMap.ts:37, src/components/answerRenderers.tsx:230, .sisyphus/evidence/task-1-migration-map-happy.txt
+4) PASS - No external image dependency in kitchen-sink demo page.
+   Evidence: src/pages/ContentKitchenSink.tsx:32, .sisyphus/evidence/task-2-demo-no-external-url.txt
+5) PASS - No manual-only acceptance checks.
+   Evidence: .sisyphus/evidence/task-17-regression-green.txt, .sisyphus/evidence/task-16-prod-demo-restriction.txt, .sisyphus/evidence/task-12-tests-green.txt
+
+Task Coverage Rollup (T1-T17)
+T1 PASS - .sisyphus/evidence/task-1-migration-map-happy.txt, .sisyphus/evidence/task-1-migration-map-fallback.txt
+T2 PASS - .sisyphus/evidence/task-2-demo-no-external-url.txt, .sisyphus/evidence/task-2-barrel-build.txt
+T3 PASS - .sisyphus/evidence/task-3-dev-entry-happy.png, .sisyphus/evidence/task-3-prod-guard.txt
+T4 PASS - .sisyphus/evidence/task-4-topic-back-happy.png, .sisyphus/evidence/task-4-topic-back-error.png
+T5 PASS - .sisyphus/evidence/task-5-types-backward-compatible.txt, .sisyphus/evidence/task-5-types-optional-safe.txt
+T6 PASS - .sisyphus/evidence/task-6-red-phase.txt, .sisyphus/evidence/task-6-smoke-still-pass.txt
+T7 PASS - .sisyphus/evidence/task-7-adapter-green.txt, .sisyphus/evidence/task-7-adapter-fallback.txt
+T8 PASS - .sisyphus/evidence/task-8-renderer-upgrade.png, .sisyphus/evidence/task-8-renderer-fallback.png
+T9 PASS - .sisyphus/evidence/task-9-section-meta-happy.png, .sisyphus/evidence/task-9-section-meta-fallback.png
+T10 PASS - .sisyphus/evidence/task-10-lesson01-migrated.png, .sisyphus/evidence/task-10-lesson01-build-check.txt
+T11 PASS - .sisyphus/evidence/task-11-lesson02-migrated.png, .sisyphus/evidence/task-11-lesson02-build-check.txt
+T12 PASS - .sisyphus/evidence/task-12-tests-green.txt, .sisyphus/evidence/task-12-no-skipped-critical.txt
+T13 PASS - .sisyphus/evidence/task-13-cleanup-happy.png, .sisyphus/evidence/task-13-cleanup-fallback.txt
+T14 PASS - .sisyphus/evidence/task-14-style-normalization.txt, .sisyphus/evidence/task-14-style-scope.txt
+T15 PASS - .sisyphus/evidence/task-15-docs-consistency.txt, .sisyphus/evidence/task-15-doc-links.txt
+T16 PASS - .sisyphus/evidence/task-16-happy-flow.png, .sisyphus/evidence/task-16-prod-demo-restriction.txt
+T17 PASS - .sisyphus/evidence/task-17-regression-green.txt, .sisyphus/evidence/task-17-regression-triage.txt
+
+Final Checklist Audit
+1) PASS - DEV-only kitchen-sink entry exists on main page and is hidden in production.
+   Evidence: src/pages/TopicsListingPage.tsx:30, src/App.tsx:44, .sisyphus/evidence/task-16-prod-demo-restriction.txt
+2) PASS - Topic page has working back navigation to topics list.
+   Evidence: src/pages/TopicPage.tsx:37, src/pages/TopicPage.tsx:41, .sisyphus/evidence/task-4-topic-back-happy.png
+3) PASS - New content components are used by production answer rendering path.
+   Evidence: src/components/answerRenderers.tsx:15, src/components/answerRenderers.tsx:229, src/components/content/index.ts:1
+4) PASS - Lesson JSON migration completed for both current lesson files.
+   Evidence: content/topics/krasivyi-konspekt/lessons/01-noble-basics.json:14, content/topics/krasivyi-konspekt/lessons/02-qa-craft.json:14, .sisyphus/evidence/task-11-lesson02-build-check.txt
+5) PASS - Legacy overlap cleaned without breaking canonical kinds.
+   Evidence: src/components/answerRenderers.tsx:218, .sisyphus/evidence/task-13-cleanup-fallback.txt, .sisyphus/evidence/task-13-cleanup-happy.png
+6) PASS - Docs and AGENTS reflect current routes/schema/component usage.
+   Evidence: AGENTS.md:27, README.md:33, docs/content-schema.md:84, CONTENT_GUIDE.md:64, .sisyphus/evidence/task-15-docs-consistency.txt
+7) PASS - No external image dependency remains in kitchen-sink demo.
+   Evidence: src/pages/ContentKitchenSink.tsx:32, .sisyphus/evidence/task-2-demo-no-external-url.txt
+
+Must Have [4/4] | Must NOT Have [5/5] | Tasks [17/17] | VERDICT: COMPLIANT

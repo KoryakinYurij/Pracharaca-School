@@ -1,0 +1,6 @@
+lesson=noble-basics
+expanded_cards=7
+callouts=13
+tables=1
+compareLabel=1
+consoleErrors=0

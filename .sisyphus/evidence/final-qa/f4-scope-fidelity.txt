@@ -1,0 +1,171 @@
+F4 Scope Fidelity Check
+Plan source: .sisyphus/plans/component-migration-tidy.md (read-only)
+Audit timestamp (UTC): 2026-02-24T12:08:27Z
+
+Method
+- Compared repository working-tree diff against plan-authorized scope for T1-T17 and final wave F1-F3.
+- Reconciled tracked and untracked paths into categories: product implementation, task evidence, final-QA evidence, orchestration control/notepad artifacts.
+- Read F1/F2/F3 artifacts to confirm final-wave outputs expected before F4 are present.
+
+Commands used
+1) git status --short --untracked-files=all
+2) git diff --stat
+3) git ls-files --others --exclude-standard
+4) read .sisyphus/plans/component-migration-tidy.md
+5) read .sisyphus/evidence/final-qa/f1-plan-compliance.txt
+6) read .sisyphus/evidence/final-qa/f2-code-quality.txt
+7) read .sisyphus/evidence/final-qa/f3-real-qa-replay.txt
+8) grep placeholder-marker regex against .sisyphus/evidence/final-qa/f4-scope-fidelity.txt
+
+Command output: git status --short --untracked-files=all
+ M .sisyphus/boulder.json
+ M AGENTS.md
+ M CONTENT_GUIDE.md
+ M README.md
+ M content/topics/krasivyi-konspekt/lessons/01-noble-basics.json
+ M content/topics/krasivyi-konspekt/lessons/02-qa-craft.json
+ M docs/content-schema.md
+ M src/App.tsx
+ M src/components/AnswerSection.tsx
+ M src/components/answerRenderers.tsx
+ M src/components/content/Callouts.tsx
+ M src/components/content/ComplexStructures.tsx
+ M src/components/content/Decorative.tsx
+ M src/components/content/Lists.tsx
+ M src/components/content/TextAccents.tsx
+ M src/content/types.ts
+ M src/pages/ContentKitchenSink.tsx
+ M src/pages/TopicPage.tsx
+ M src/pages/TopicsListingPage.tsx
+?? .sisyphus/evidence/final-qa/f1-plan-compliance.txt
+?? .sisyphus/evidence/final-qa/f2-code-quality.txt
+?? .sisyphus/evidence/final-qa/f3-dev-fallback-renderer-visible-safe.png
+?? .sisyphus/evidence/final-qa/f3-dev-kitchen-sink-entry.png
+?? .sisyphus/evidence/final-qa/f3-dev-lesson-noble-basics-expanded.png
+?? .sisyphus/evidence/final-qa/f3-dev-lesson-qa-craft-expanded.png
+?? .sisyphus/evidence/final-qa/f3-dev-main-topics-back-flow.png
+?? .sisyphus/evidence/final-qa/f3-dev-migrated-renderer-structures.png
+?? .sisyphus/evidence/final-qa/f3-dev-results.json
+?? .sisyphus/evidence/final-qa/f3-dev-topic-invalid-recovery.png
+?? .sisyphus/evidence/final-qa/f3-prod-demo-restriction.txt
+?? .sisyphus/evidence/final-qa/f3-prod-home-no-dev-entry.png
+?? .sisyphus/evidence/final-qa/f3-prod-kitchen-guard.png
+?? .sisyphus/evidence/final-qa/f3-prod-results.json
+?? .sisyphus/evidence/final-qa/f3-prod-route-probes.txt
+?? .sisyphus/evidence/final-qa/f3-real-qa-replay.txt
+?? .sisyphus/evidence/final-qa/f3-replay-results.json
+?? .sisyphus/evidence/final-qa/f3-replay-results.md
+?? .sisyphus/evidence/final-qa/f4-scope-fidelity.txt
+?? .sisyphus/evidence/task-1-migration-map-fallback.txt
+?? .sisyphus/evidence/task-1-migration-map-happy.txt
+?? .sisyphus/evidence/task-10-lesson01-build-check.txt
+?? .sisyphus/evidence/task-10-lesson01-migrated.png
+?? .sisyphus/evidence/task-11-lesson02-build-check.txt
+?? .sisyphus/evidence/task-11-lesson02-migrated.png
+?? .sisyphus/evidence/task-12-no-skipped-critical.txt
+?? .sisyphus/evidence/task-12-tests-green.txt
+?? .sisyphus/evidence/task-13-cleanup-fallback.txt
+?? .sisyphus/evidence/task-13-cleanup-happy.png
+?? .sisyphus/evidence/task-13-orchestrator-qa.png
+?? .sisyphus/evidence/task-13-orchestrator-qa.txt
+?? .sisyphus/evidence/task-14-orchestrator-qa.png
+?? .sisyphus/evidence/task-14-orchestrator-qa.txt
+?? .sisyphus/evidence/task-14-style-normalization.txt
+?? .sisyphus/evidence/task-14-style-scope.txt
+?? .sisyphus/evidence/task-15-doc-links.txt
+?? .sisyphus/evidence/task-15-docs-consistency.txt
+?? .sisyphus/evidence/task-16-happy-flow.png
+?? .sisyphus/evidence/task-16-orchestrator-happy.png
+?? .sisyphus/evidence/task-16-orchestrator-kitchensink.png
+?? .sisyphus/evidence/task-16-orchestrator-kitchensink.txt
+?? .sisyphus/evidence/task-16-orchestrator-qa.txt
+?? .sisyphus/evidence/task-16-prod-demo-restriction.txt
+?? .sisyphus/evidence/task-17-regression-green.txt
+?? .sisyphus/evidence/task-17-regression-triage.txt
+?? .sisyphus/evidence/task-2-barrel-build.txt
+?? .sisyphus/evidence/task-2-demo-no-external-url.txt
+?? .sisyphus/evidence/task-2-kitchen-sink-qa.png
+?? .sisyphus/evidence/task-3-dev-entry-happy.png
+?? .sisyphus/evidence/task-3-prod-guard.txt
+?? .sisyphus/evidence/task-4-topic-back-error.png
+?? .sisyphus/evidence/task-4-topic-back-happy.png
+?? .sisyphus/evidence/task-4-topic-back-orchestrator-error.png
+?? .sisyphus/evidence/task-4-topic-back-orchestrator-normal.png
+?? .sisyphus/evidence/task-5-types-backward-compatible.txt
+?? .sisyphus/evidence/task-5-types-optional-safe.txt
+?? .sisyphus/evidence/task-6-red-phase.txt
+?? .sisyphus/evidence/task-6-smoke-still-pass.txt
+?? .sisyphus/evidence/task-7-adapter-fallback.txt
+?? .sisyphus/evidence/task-7-adapter-green.txt
+?? .sisyphus/evidence/task-8-orchestrator-fallback.png
+?? .sisyphus/evidence/task-8-orchestrator-upgrade-expanded.png
+?? .sisyphus/evidence/task-8-orchestrator-upgrade.png
+?? .sisyphus/evidence/task-8-renderer-fallback.png
+?? .sisyphus/evidence/task-8-renderer-upgrade.png
+?? .sisyphus/evidence/task-9-section-meta-fallback.png
+?? .sisyphus/evidence/task-9-section-meta-happy.png
+?? .sisyphus/notepads/component-migration-tidy/decisions.md
+?? .sisyphus/notepads/component-migration-tidy/issues.md
+?? .sisyphus/notepads/component-migration-tidy/learnings.md
+?? .sisyphus/notepads/component-migration-tidy/problems.md
+?? .sisyphus/plans/component-migration-tidy.md
+?? src/components/content/adapters.ts
+?? src/components/content/index.ts
+?? src/content/migrationMap.ts
+?? src/test/migration-adapter.test.tsx
+?? src/test/migration-map-coverage.test.ts
+?? src/test/migration-renderers-red.test.tsx
+?? src/test/migration-routing-red.test.tsx
+
+Command output: git diff --stat
+ .sisyphus/boulder.json                             |  12 +-
+ AGENTS.md                                          |   1 +
+ CONTENT_GUIDE.md                                   |  11 +
+ README.md                                          |   1 +
+ .../krasivyi-konspekt/lessons/01-noble-basics.json | 113 +++++++--
+ .../krasivyi-konspekt/lessons/02-qa-craft.json     | 110 +++++++--
+ docs/content-schema.md                             |  27 +++
+ src/App.tsx                                        |  18 +-
+ src/components/AnswerSection.tsx                   |  95 ++++----
+ src/components/answerRenderers.tsx                 | 252 ++++++++++-----------
+ src/components/content/Callouts.tsx                |  83 ++++---
+ src/components/content/ComplexStructures.tsx       | 106 ++++-----
+ src/components/content/Decorative.tsx              | 116 +++++-----
+ src/components/content/Lists.tsx                   |  68 +++---
+ src/components/content/TextAccents.tsx             |  88 +++----
+ src/content/types.ts                               |  18 ++
+ src/pages/ContentKitchenSink.tsx                   |  26 ++-
+ src/pages/TopicPage.tsx                            |  10 +
+ src/pages/TopicsListingPage.tsx                    |  13 ++
+ 19 files changed, 662 insertions(+), 506 deletions(-)
+
+Inventory totals
+- Tracked modified files: 19
+- Untracked files: 76
+- Total changed/untracked inventory: 95
+
+Scope reconciliation
+1) Core product files (T1-T17): accounted.
+   - Source and tests under `src/`: migration map/adapters/renderers/routing/tests match T1-T14.
+   - Content JSON under `content/topics/.../lessons/*.json`: matches T10-T11.
+   - Docs (`AGENTS.md`, `README.md`, `docs/content-schema.md`, `CONTENT_GUIDE.md`): matches T15.
+
+2) Evidence artifacts (T1-T17 + F1-F3): accounted.
+   - `.sisyphus/evidence/task-*`: expected per task QA scenarios and acceptance evidence.
+   - `.sisyphus/evidence/final-qa/f1-*`, `f2-*`, `f3-*`: expected outputs for final verification wave before F4.
+
+3) Orchestration/control artifacts: accounted.
+   - `.sisyphus/boulder.json`: required F4 handoff-state update (active_task=F4, timestamp refresh).
+   - `.sisyphus/notepads/component-migration-tidy/*.md`: required append-only operational notes; `problems.md` is in-scope notepad file even if unchanged by this task.
+   - `.sisyphus/plans/component-migration-tidy.md`: required read-only plan input; present as untracked control artifact, not scope creep.
+
+Suspicious-file rationale
+- No product-path files were found outside planned T1-T17 targets.
+- Files that may look suspicious are confined to `.sisyphus/evidence/`, `.sisyphus/notepads/`, and `.sisyphus/plans/` control paths and are legitimate plan/evidence or orchestration artifacts.
+- No additional unaccounted files remain after categorization.
+
+Placeholder scan for F4 report
+- Pattern: placeholder marker regex
+- Result: no matches
+
+Scope [COMPLIANT] | Unaccounted Files [0] | VERDICT

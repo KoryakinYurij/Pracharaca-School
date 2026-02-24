@@ -1,0 +1,10 @@
+Task 7 fallback evidence
+
+Fallbacks covered by src/test/migration-adapter.test.tsx:
+- body: empty/blank body resolves to SAFE_TEXT_FALLBACK when safeFallback=true.
+- items: empty items/body resolves to [SAFE_TEXT_FALLBACK] when safeFallback=true.
+- glossary pairs: missing term receives deterministic title (Term N), missing desc uses SAFE_TEXT_FALLBACK.
+- columns: missing column titles receive deterministic title (Column N), empty columns fallback to one default column.
+- table: sparse rows are padded per header with SAFE_TEXT_FALLBACK; invalid table returns null when safeFallback=false.
+
+Result: deterministic fallback paths asserted and passing.

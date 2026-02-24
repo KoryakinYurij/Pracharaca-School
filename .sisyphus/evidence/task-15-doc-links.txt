@@ -1,0 +1,80 @@
+# Task 15: Documentation Links and Paths Evidence
+
+## Verification Date: 2026-02-24
+
+## Link Verification
+
+### AGENTS.md Links (lines 36-42)
+
+| Link Path | Target File | Status |
+|-----------|-------------|--------|
+| `./docs/design-system.md` | docs/design-system.md | EXISTS |
+| `./docs/ux-patterns.md` | docs/ux-patterns.md | EXISTS |
+| `./docs/animations.md` | docs/animations.md | EXISTS |
+| `./docs/threejs-background.md` | docs/threejs-background.md | EXISTS |
+| `./docs/constraints.md` | docs/constraints.md | EXISTS |
+| `./docs/dev-setup.md` | docs/dev-setup.md | EXISTS |
+| `./docs/content-schema.md` | docs/content-schema.md | EXISTS |
+| `./CONTENT_GUIDE.md` | CONTENT_GUIDE.md | EXISTS |
+
+### docs/content-schema.md Links (line 111)
+
+| Link Path | Target File | Status |
+|-----------|-------------|--------|
+| `../CONTENT_GUIDE.md` | CONTENT_GUIDE.md | EXISTS |
+
+## Path References in Documentation
+
+### AGENTS.md Structure Section (lines 27-32)
+- `/` — список тем
+- `/topic/:slug` — тема + список уроков
+- `/topic/:slug/lesson/:lessonSlug` — урок с карточками
+- `/kitchen-sink` — DEV-only демо всех компонентов
+- `content/topics/<slug>/meta.json` — метаданные темы
+- `content/topics/<slug>/lessons/*.json` — уроки и карточки
+
+### README.md Structure Section (lines 33-38)
+- `/` — список тем
+- `/topic/:slug` — тема и список уроков
+- `/topic/:slug/lesson/:lessonSlug` — урок с карточками вопрос/ответ
+- `/kitchen-sink` — DEV-only демо всех компонентов
+- `content/topics/<slug>/meta.json` — метаданные темы
+- `content/topics/<slug>/lessons/*.json` — уроки и карточки
+
+## Content Paths Referenced
+
+| Path Pattern | Description | Used In |
+|--------------|-------------|---------|
+| `content/topics/<topic-slug>/meta.json` | Topic metadata | docs/content-schema.md, CONTENT_GUIDE.md |
+| `content/topics/<topic-slug>/lessons/<order>-<slug>.json` | Lesson files | docs/content-schema.md, CONTENT_GUIDE.md |
+| `content/topics/noble-notes/meta.json` | Example path | docs/content-schema.md |
+| `content/topics/noble-notes/lessons/01-introduction.json` | Example path | docs/content-schema.md |
+
+## Schema Field Paths
+
+### AnswerSectionData (src/content/types.ts)
+- `kind` - required
+- `title` - optional
+- `body` - optional
+- `items` - optional
+- `pairs` - optional
+- `columns` - optional
+- `table` - optional
+- `variant` - optional
+- `visualHint` - optional
+- `author` - optional
+- `migration` - optional object with nested fields
+
+### Documented in:
+- docs/content-schema.md: "Дополнительные поля секции"
+- CONTENT_GUIDE.md: "4a. Опциональные поля секции"
+
+---
+
+## Summary
+
+All links in the modified documentation files are valid:
+- 8 links in AGENTS.md - all target existing files
+- 1 link in docs/content-schema.md - targets existing file
+- All path references match actual implementation routes
+- All schema field references match types.ts

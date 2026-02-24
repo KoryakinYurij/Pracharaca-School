@@ -1,0 +1,134 @@
+# Task 15: Documentation Consistency Evidence
+
+## Verification Date: 2026-02-24
+
+## 1. Route Consistency
+
+### Implementation (src/App.tsx)
+- `/` - Topics listing page
+- `/topic/:slug` - Topic page
+- `/topic/:slug/lesson/:lessonSlug` - Lesson page
+- `/kitchen-sink` - DEV-only (guarded by `import.meta.env.DEV`)
+- `/lesson/*` - Redirect to `/`
+- `*` - Redirect to `/`
+
+### AGENTS.md (line 27-30)
+- `/` — список тем
+- `/topic/:slug` — тема + список уроков
+- `/topic/:slug/lesson/:lessonSlug` — урок с карточками
+- `/kitchen-sink` — DEV-only демо всех компонентов (доступно только при `import.meta.env.DEV`, недоступно в preview/prod)
+
+### README.md (line 33-36)
+- `/` — список тем
+- `/topic/:slug` — тема и список уроков
+- `/topic/:slug/lesson/:lessonSlug` — урок с карточками вопрос/ответ
+- `/kitchen-sink` — DEV-only демо всех компонентов (доступно только при `import.meta.env.DEV`, недоступно в preview/prod)
+
+**Status: CONSISTENT**
+
+## 2. Kitchen-Sink DEV-Only Policy
+
+### Implementation (src/App.tsx, line 44)
+```typescript
+{import.meta.env.DEV && (
+  <Route
+    path="/kitchen-sink"
+    element={
+      <PageTransition>
+        <ContentKitchenSink />
+      </PageTransition>
+    }
+  />
+)}
+```
+
+### Implementation (src/pages/TopicsListingPage.tsx, line 30)
+```typescript
+{import.meta.env.DEV && (
+  <div className="mb-4">
+    <Link to="/kitchen-sink" ...>
+      <span>🔧 DEV: Kitchen Sink Demo</span>
+    </Link>
+  </div>
+)}
+```
+
+### Documentation (AGENTS.md, README.md)
+Both explicitly state: "доступно только при `import.meta.env.DEV`, недоступно в preview/prod"
+
+**Status: CONSISTENT**
+
+## 3. Schema Fields Consistency
+
+### Implementation (src/content/types.ts)
+AnswerSectionData fields:
+- kind: AnswerKind (required)
+- title?: string
+- body?: string
+- items?: string[]
+- pairs?: AnswerPairData[]
+- columns?: AnswerColumnData[]
+- table?: AnswerTableData
+- variant?: string
+- visualHint?: string
+- author?: string
+- migration?: AnswerSectionMigrationMetadata
+
+### docs/content-schema.md
+- Documents all fields in "Дополнительные поля секции" section
+- Documents migration object with all nested properties
+
+### CONTENT_GUIDE.md
+- Section "4a. Опциональные поля секции" documents variant, visualHint, author, migration
+
+**Status: CONSISTENT**
+
+## 4. Migration Policy
+
+### Implementation (renderer policy)
+- new -> legacy (tries new renderer first, then legacy)
+- Unknown kinds fall back to legacy text rendering
+
+### docs/content-schema.md
+- Documents: "Рендерер использует политику `new -> legacy`: сначала пробует новый рендерер, затем legacy. Для неизвестных kind используется safe fallback — legacy-рендер в виде простого текста."
+
+### CONTENT_GUIDE.md
+- Same policy documented
+
+**Status: CONSISTENT**
+
+## 5. Topic Page Navigation
+
+### Implementation (src/pages/TopicPage.tsx, line 41)
+```typescript
+<Link to="/" ...>
+  <ArrowLeft className="h-4 w-4 text-gold/80" aria-hidden="true" />
+  К темам
+</Link>
+```
+
+### Documentation
+Both AGENTS.md and README.md list route `/topic/:slug` without specific navigation details. Navigation label "К темам" is consistent with implementation.
+
+**Status: CONSISTENT**
+
+## 6. All 14 supported kind values documented
+
+### Implementation (src/content/types.ts)
+summary, details, steps, example, note, warning, quote, definition, checklist, pitfalls, dosdonts, compare, mnemonic, references
+
+### docs/content-schema.md
+All 14 kinds listed in table
+
+**Status: CONSISTENT**
+
+---
+
+## Summary
+
+All documentation changes from Task 15 are consistent with the implementation:
+- Routes match exactly
+- DEV-only kitchen-sink policy is properly documented
+- Schema fields are accurately described
+- Migration policy is correctly documented
+- No contradictions between docs
