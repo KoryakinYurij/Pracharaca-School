@@ -27,6 +27,7 @@ npm run lint     # eslint
 - `/` — список тем
 - `/topic/:slug` — тема + список уроков
 - `/topic/:slug/lesson/:lessonSlug` — урок с карточками
+- `/kitchen-sink` — DEV-only демо всех компонентов (доступно только при `import.meta.env.DEV`, недоступно в preview/prod)
 - `content/topics/<slug>/meta.json` — метаданные темы
 - `content/topics/<slug>/lessons/*.json` — уроки и карточки
 

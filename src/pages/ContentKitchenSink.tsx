@@ -1,14 +1,21 @@
 import React from 'react';
+import { BookOpen, Feather, Scale } from 'lucide-react';
 import {
-  BookOpen,
-  Feather,
-  Scale
-} from 'lucide-react';
-import { GiantQuote, ConceptCard, PrincipleBlock } from '../components/content/TextAccents';
-import { GoldDotList, BadgeList, GlossaryList } from '../components/content/Lists';
-import { Callout, MetaphorBlock } from '../components/content/Callouts';
-import { StepTimeline, VisualFormula, MetricDashboard } from '../components/content/ComplexStructures';
-import { HeroBanner, IconBackgroundCard, QAPill } from '../components/content/Decorative';
+  HeroBanner,
+  IconBackgroundCard,
+  QAPill,
+  GiantQuote,
+  ConceptCard,
+  PrincipleBlock,
+  GoldDotList,
+  BadgeList,
+  GlossaryList,
+  Callout,
+  MetaphorBlock,
+  StepTimeline,
+  VisualFormula,
+  MetricDashboard,
+} from '../components/content';
 
 export const ContentKitchenSink: React.FC = () => {
   return (
@@ -25,7 +32,6 @@ export const ContentKitchenSink: React.FC = () => {
         <HeroBanner
           title="The Noble Design System"
           overline="Visual Philosophy"
-          backgroundImage="https://images.unsplash.com/photo-1605423858022-2621092e4c84?q=80&w=200&auto=format&fit=crop"
         >
           An exploration of typography, spacing, and elegance in digital education content.
         </HeroBanner>

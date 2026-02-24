@@ -41,14 +41,16 @@ function AppContent() {
             }
           />
           <Route path="/lesson/*" element={<Navigate to="/" replace />} />
-          <Route
-            path="/kitchen-sink"
-            element={
-              <PageTransition>
-                <ContentKitchenSink />
-              </PageTransition>
-            }
-          />
+          {import.meta.env.DEV && (
+            <Route
+              path="/kitchen-sink"
+              element={
+                <PageTransition>
+                  <ContentKitchenSink />
+                </PageTransition>
+              }
+            />
+          )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>

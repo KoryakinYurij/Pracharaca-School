@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { TopicCard } from '../components/TopicCard'
 import { getTopics } from '../content/loader'
 
@@ -26,6 +27,18 @@ export function TopicsListingPage() {
 
   return (
     <section aria-label="Темы" className="mx-auto max-w-7xl space-y-5 px-4 py-12 sm:px-6 lg:px-8">
+      {import.meta.env.DEV && (
+        <div className="mb-4">
+          <Link
+            to="/kitchen-sink"
+            data-testid="dev-kitchen-link"
+            className="inline-flex items-center gap-2 rounded-md bg-graphite/10 px-3 py-1.5 text-xs font-medium text-graphite/70 transition-colors hover:bg-graphite/20 hover:text-graphite"
+          >
+            <span>🔧 DEV: Kitchen Sink Demo</span>
+          </Link>
+        </div>
+      )}
+
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-graphite/70">Темы</p>
 
       <motion.ul

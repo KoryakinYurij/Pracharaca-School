@@ -31,6 +31,16 @@ export function TopicPage() {
 
   return (
     <>
+      <div className="sticky top-3 z-20 w-fit sm:top-4">
+        <Link
+          to="/"
+          data-testid="topic-back-to-topics"
+          className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-full border border-border/90 bg-ivory/80 px-4 py-2 text-sm font-medium text-graphite/85 shadow-soft backdrop-blur-sm transition-colors hover:border-gold/60 hover:text-graphite"
+        >
+          <ArrowLeft className="h-4 w-4 text-gold/80" aria-hidden="true" />
+          К темам
+        </Link>
+      </div>
       <div className="rounded-2xl bg-ivory/80 px-5 py-6 backdrop-blur-sm sm:px-8 sm:py-8">
         <Header subtitle={topic.subtitle} title={topic.title} description={topic.description} />
         <DividerOrnament />

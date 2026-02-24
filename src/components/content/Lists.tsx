@@ -1,78 +1,66 @@
-import React from 'react';
-import clsx from 'clsx';
+import clsx from 'clsx'
+import type { ReactNode } from 'react'
 
-// -----------------------------------------------------------------------------
-// Component: GoldDotList
-// -----------------------------------------------------------------------------
 export interface GoldDotListProps {
-  items: React.ReactNode[];
-  className?: string;
+  items: ReactNode[]
+  className?: string
 }
 
-export const GoldDotList: React.FC<GoldDotListProps> = ({ items, className }) => {
+export function GoldDotList({ items, className }: GoldDotListProps) {
   return (
     <ul className={clsx('space-y-4 font-body text-lg text-graphite', className)}>
       {items.map((item, index) => (
         <li key={index} className="flex items-start">
-          <span className="mr-3 text-gold text-2xl leading-none mt-1 select-none">•</span>
+          <span className="mt-1 mr-3 select-none text-2xl leading-none text-gold">•</span>
           <span>{item}</span>
         </li>
       ))}
     </ul>
-  );
-};
-
-// -----------------------------------------------------------------------------
-// Component: BadgeList
-// -----------------------------------------------------------------------------
-export interface BadgeListProps {
-  items: React.ReactNode[];
-  className?: string;
+  )
 }
 
-export const BadgeList: React.FC<BadgeListProps> = ({ items, className }) => {
+export interface BadgeListProps {
+  items: ReactNode[]
+  className?: string
+}
+
+export function BadgeList({ items, className }: BadgeListProps) {
   return (
     <ol className={clsx('space-y-6', className)}>
       {items.map((item, index) => (
         <li key={index} className="flex gap-4">
-          <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-graphite text-ivory font-body font-bold text-sm">
+          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-graphite font-body text-sm font-bold text-ivory">
             {index + 1}
           </div>
-          <div className="pt-1 font-body text-lg text-graphite leading-relaxed">
-            {item}
-          </div>
+          <div className="font-body pt-1 text-lg leading-relaxed text-graphite">{item}</div>
         </li>
       ))}
     </ol>
-  );
-};
+  )
+}
 
-// -----------------------------------------------------------------------------
-// Component: GlossaryList
-// -----------------------------------------------------------------------------
 export interface GlossaryItem {
-  term: string;
-  definition: React.ReactNode;
+  term: string
+  definition: ReactNode
 }
 
 export interface GlossaryListProps {
-  items: GlossaryItem[];
-  className?: string;
+  items: GlossaryItem[]
+  className?: string
 }
 
-export const GlossaryList: React.FC<GlossaryListProps> = ({ items, className }) => {
+export function GlossaryList({ items, className }: GlossaryListProps) {
   return (
     <dl className={clsx('space-y-4', className)}>
       {items.map((item, index) => (
-        <div key={index} className="bg-ivory shadow-card rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
-          <dt className="font-display text-xl text-gold mb-2 font-semibold">
-            {item.term}
-          </dt>
-          <dd className="font-body text-graphite/80 leading-relaxed">
-            {item.definition}
-          </dd>
+        <div
+          key={index}
+          className="rounded-lg bg-ivory p-6 shadow-card transition-shadow duration-300 hover:shadow-lg"
+        >
+          <dt className="mb-2 font-display text-xl font-semibold text-gold">{item.term}</dt>
+          <dd className="font-body leading-relaxed text-graphite/80">{item.definition}</dd>
         </div>
       ))}
     </dl>
-  );
-};
+  )
+}

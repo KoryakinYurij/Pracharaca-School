@@ -1,6 +1,18 @@
 import clsx from 'clsx'
-import { AlertTriangle, CheckCircle2 } from 'lucide-react'
+import type { ReactNode } from 'react'
 import type { AnswerSectionData } from '../content/types'
+import { resolveMigrationStrategy } from '../content/migrationMap'
+import {
+  BadgeList,
+  Callout,
+  GiantQuote,
+  GlossaryList,
+  GoldDotList,
+  PrincipleBlock,
+  adaptBody,
+  adaptGlossaryProps,
+  adaptItems,
+} from './content'
 
 export const EMPTY_STATE = 'Нет данных'
 
@@ -12,105 +24,9 @@ export function normalizeItems(items?: string[]) {
   return (items ?? []).map((item) => item.trim()).filter(Boolean)
 }
 
-export function splitBodyLines(body?: string) {
-  return (body ?? '')
-    .split(/\n+/)
-    .map((item) => item.trim())
-    .filter(Boolean)
-}
-
-export function getSectionItems(section: AnswerSectionData) {
-  const listFromItems = normalizeItems(section.items)
-  if (listFromItems.length > 0) {
-    return listFromItems
-  }
-
-  return splitBodyLines(section.body)
-}
-
 export function renderText(section: AnswerSectionData, className?: string) {
   const text = getText(section) || EMPTY_STATE
   return <p className={clsx('whitespace-pre-line text-sm text-graphite/85 sm:text-base', className)}>{text}</p>
-}
-
-export function renderSteps(section: AnswerSectionData) {
-  const steps = section.items && section.items.length > 0 ? normalizeItems(section.items) : splitBodyLines(section.body)
-  if (steps.length === 0) {
-    return renderText(section)
-  }
-
-  return (
-    <ol className="space-y-2">
-      {steps.map((step, index) => (
-        <li key={`${step}-${index}`} className="flex items-start gap-3 text-sm text-graphite/85 sm:text-base">
-          <span className="text-xs font-medium text-graphite/50">
-            {index + 1}
-          </span>
-          <span className="whitespace-pre-line">{step}</span>
-        </li>
-      ))}
-    </ol>
-  )
-}
-
-export function renderDefinition(section: AnswerSectionData) {
-  const pairs = (section.pairs ?? [])
-    .map((pair) => ({
-      term: pair.term.trim(),
-      desc: pair.desc.trim(),
-    }))
-    .filter((pair) => pair.term || pair.desc)
-
-  if (pairs.length === 0) {
-    return renderText(section)
-  }
-
-  return (
-    <dl className="divide-y divide-border/70">
-      {pairs.map((pair, index) => (
-        <div key={`${pair.term}-${index}`} className="grid gap-1 py-2 sm:grid-cols-[minmax(0,220px),1fr] sm:gap-3">
-          <dt className="font-display text-base text-graphite/90 sm:text-lg">{pair.term || `Термин ${index + 1}`}</dt>
-          <dd className="text-sm leading-relaxed text-graphite/85 sm:text-base">{pair.desc || EMPTY_STATE}</dd>
-        </div>
-      ))}
-    </dl>
-  )
-}
-
-export function renderChecklist(section: AnswerSectionData) {
-  const items = getSectionItems(section)
-  if (items.length === 0) {
-    return renderText(section)
-  }
-
-  return (
-    <ul className="space-y-2">
-      {items.map((item, index) => (
-        <li key={`${item}-${index}`} className="flex items-start gap-2.5 text-sm text-graphite/85 sm:text-base">
-          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold/80" aria-hidden="true" />
-          <span className="whitespace-pre-line">{item}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-export function renderPitfalls(section: AnswerSectionData) {
-  const items = getSectionItems(section)
-  if (items.length === 0) {
-    return renderText(section)
-  }
-
-  return (
-    <ul className="space-y-2">
-      {items.map((item, index) => (
-        <li key={`${item}-${index}`} className="flex items-start gap-2.5 text-sm text-graphite/85 sm:text-base">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold/80" aria-hidden="true" />
-          <span className="whitespace-pre-line">{item}</span>
-        </li>
-      ))}
-    </ul>
-  )
 }
 
 export function renderColumns(
@@ -122,12 +38,12 @@ export function renderColumns(
   return (
     <div className={className}>
       {columns.map((column, index) => (
-        <section key={`${column.title}-${index}`} className={columnClassName}>
+        <section key={`${column.title}-${column.items.join('|')}`} className={columnClassName}>
           <h4 className={titleClassName}>{column.title || `Колонка ${index + 1}`}</h4>
           {column.items.length > 0 ? (
             <ul className="space-y-2">
-              {column.items.map((item, itemIndex) => (
-                <li key={`${item}-${itemIndex}`} className="text-sm leading-relaxed text-graphite/85 sm:text-base">
+              {column.items.map((item) => (
+                <li key={item} className="text-sm leading-relaxed text-graphite/85 sm:text-base">
                   {item}
                 </li>
               ))}
@@ -165,6 +81,12 @@ export function renderCompare(section: AnswerSectionData) {
   const table = section.table
   const tableHeaders = normalizeItems(table?.headers)
   const tableRows = (table?.rows ?? []).map((row) => row.map((cell) => cell.trim()))
+  const safeRows = tableRows.map((row) =>
+    tableHeaders.map((header, colIndex) => ({
+      header,
+      value: row[colIndex] || EMPTY_STATE,
+    })),
+  )
 
   if (tableHeaders.length > 0 && tableRows.length > 0) {
     return (
@@ -172,9 +94,9 @@ export function renderCompare(section: AnswerSectionData) {
         <table className="min-w-full border-collapse break-words text-left text-sm text-graphite/85 sm:text-base">
           <thead>
             <tr>
-              {tableHeaders.map((header, index) => (
+              {tableHeaders.map((header) => (
                 <th
-                  key={`${header}-${index}`}
+                  key={header}
                   scope="col"
                   className="border-b border-border/80 px-3 py-2 font-semibold text-graphite/80"
                 >
@@ -184,11 +106,11 @@ export function renderCompare(section: AnswerSectionData) {
             </tr>
           </thead>
           <tbody>
-            {tableRows.map((row, rowIndex) => (
-              <tr key={`row-${rowIndex}`} className="align-top">
-                {tableHeaders.map((_, colIndex) => (
-                  <td key={`cell-${rowIndex}-${colIndex}`} className="border-b border-border/60 px-3 py-2">
-                    {row[colIndex] || EMPTY_STATE}
+            {safeRows.map((row) => (
+              <tr key={row.map((cell) => `${cell.header}:${cell.value}`).join('|')} className="align-top">
+                {row.map((cell) => (
+                  <td key={`${cell.header}-${cell.value}`} className="border-b border-border/60 px-3 py-2">
+                    {cell.value}
                   </td>
                 ))}
               </tr>
@@ -218,31 +140,107 @@ export function renderCompare(section: AnswerSectionData) {
   return renderText(section)
 }
 
-export function renderMnemonic(section: AnswerSectionData) {
-  const text = getText(section) || EMPTY_STATE
+function renderCallout(section: AnswerSectionData, type: 'insight' | 'important' | 'warning') {
+  const text = adaptBody(section)
   return (
-    <div className="space-y-3">
-      <p className="whitespace-pre-line font-display text-lg leading-relaxed text-graphite/90 sm:text-xl">{text}</p>
-    </div>
+    <Callout type={type} className="my-0 p-4 sm:p-5">
+      <p className="whitespace-pre-line text-sm leading-relaxed sm:text-base">{text}</p>
+    </Callout>
   )
 }
 
-export function renderReferences(section: AnswerSectionData) {
-  const items = getSectionItems(section)
-  if (items.length === 0) {
-    return renderText(section, 'text-xs text-graphite/75 sm:text-sm')
+function renderNewChecklist(section: AnswerSectionData) {
+  const items = adaptItems(section)
+  return <GoldDotList items={items} className="space-y-2 text-base text-graphite/85" />
+}
+
+function renderNewDefinition(section: AnswerSectionData) {
+  const glossaryProps = adaptGlossaryProps(section)
+  return <GlossaryList {...glossaryProps} className="space-y-3" />
+}
+
+function renderNewSteps(section: AnswerSectionData) {
+  const items = adaptItems(section)
+  return <BadgeList items={items} className="space-y-4" />
+}
+
+function renderNewPitfalls(section: AnswerSectionData) {
+  const items = adaptItems(section)
+  return (
+    <Callout type="warning" className="my-0 p-4 sm:p-5">
+      <GoldDotList items={items} className="space-y-2 text-base text-graphite/85" />
+    </Callout>
+  )
+}
+
+function renderNewMnemonic(section: AnswerSectionData) {
+  return <PrincipleBlock>{adaptBody(section)}</PrincipleBlock>
+}
+
+function renderNewReferences(section: AnswerSectionData) {
+  const items = adaptItems(section)
+  return <GoldDotList items={items} className="space-y-2 text-sm text-graphite/75" />
+}
+
+function renderNewQuote(section: AnswerSectionData) {
+  return <GiantQuote author={section.author}>{adaptBody(section)}</GiantQuote>
+}
+
+function renderNewByKind(section: AnswerSectionData): ReactNode | null {
+  switch (section.kind) {
+    case 'summary':
+      return renderCallout(section, 'insight')
+    case 'example':
+      return renderCallout(section, 'important')
+    case 'note':
+      return renderCallout(section, 'insight')
+    case 'warning':
+      return renderCallout(section, 'warning')
+    case 'steps':
+      return renderNewSteps(section)
+    case 'quote':
+      return renderNewQuote(section)
+    case 'definition':
+      return renderNewDefinition(section)
+    case 'checklist':
+      return renderNewChecklist(section)
+    case 'pitfalls':
+      return renderNewPitfalls(section)
+    case 'mnemonic':
+      return renderNewMnemonic(section)
+    case 'references':
+      return renderNewReferences(section)
+    default:
+      return null
+  }
+}
+
+export function renderLegacyByKind(section: AnswerSectionData): ReactNode {
+  switch (section.kind) {
+    case 'dosdonts':
+      return renderDosDonts(section)
+    case 'compare':
+      return renderCompare(section)
+    default:
+      return renderText(section)
+  }
+}
+
+export function renderSectionBody(section: AnswerSectionData): ReactNode {
+  const order = section.migration?.rendererOrder ?? resolveMigrationStrategy(section.kind).rendererOrder
+  for (const renderer of order) {
+    if (renderer === 'new') {
+      const content = renderNewByKind(section)
+      if (content) {
+        return content
+      }
+      continue
+    }
+
+    if (renderer === 'legacy') {
+      return renderLegacyByKind(section)
+    }
   }
 
-  return (
-    <ul className="space-y-1.5 text-xs leading-relaxed text-graphite/75 sm:text-sm">
-      {items.map((item, index) => (
-        <li key={`${item}-${index}`} className="flex gap-2">
-          <span aria-hidden="true" className="text-gold/70">
-            -
-          </span>
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  )
+  return renderLegacyByKind(section)
 }

@@ -33,6 +33,7 @@ npm run dev
 - `/` — список тем
 - `/topic/:slug` — тема и список уроков
 - `/topic/:slug/lesson/:lessonSlug` — урок с карточками вопрос/ответ
+- `/kitchen-sink` — DEV-only демо всех компонентов (доступно только при `import.meta.env.DEV`, недоступно в preview/prod)
 - `content/topics/<slug>/meta.json` — метаданные темы
 - `content/topics/<slug>/lessons/*.json` — уроки и карточки
 

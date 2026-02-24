@@ -1,0 +1,205 @@
+import type {
+  AnswerColumnData,
+  AnswerPairData,
+  AnswerSectionData,
+  AnswerTableData,
+} from '../../content/types'
+import type { StepTimelineProps } from './ComplexStructures'
+import type { GlossaryListProps } from './Lists'
+
+export const SAFE_TEXT_FALLBACK = 'Нет данных'
+
+export interface AdapterOptions {
+  safeFallback?: boolean
+}
+
+export interface ComparisonColumn {
+  title: string
+  items: string[]
+}
+
+export interface ComparisonTable {
+  headers: string[]
+  rows: string[][]
+}
+
+const DEFAULT_OPTIONS: Required<AdapterOptions> = {
+  safeFallback: true,
+}
+
+function resolveOptions(options?: AdapterOptions): Required<AdapterOptions> {
+  return {
+    ...DEFAULT_OPTIONS,
+    ...options,
+  }
+}
+
+export function normalizeText(text?: string): string {
+  return text?.trim() ?? ''
+}
+
+export function toSafeText(text?: string): string {
+  const value = normalizeText(text)
+  return value || SAFE_TEXT_FALLBACK
+}
+
+export function normalizeStringItems(items?: readonly string[]): string[] {
+  return (items ?? []).map((item) => normalizeText(item)).filter(Boolean)
+}
+
+export function splitBodyLines(body?: string): string[] {
+  return (body ?? '')
+    .split(/\n+/)
+    .map((item) => normalizeText(item))
+    .filter(Boolean)
+}
+
+export function adaptBody(section: Pick<AnswerSectionData, 'body'>, options?: AdapterOptions): string {
+  const text = normalizeText(section.body)
+  if (text) {
+    return text
+  }
+
+  if (resolveOptions(options).safeFallback) {
+    return SAFE_TEXT_FALLBACK
+  }
+
+  return ''
+}
+
+export function adaptItems(section: Pick<AnswerSectionData, 'items' | 'body'>, options?: AdapterOptions): string[] {
+  const fromItems = normalizeStringItems(section.items)
+  const normalized = fromItems.length > 0 ? fromItems : splitBodyLines(section.body)
+  if (normalized.length > 0) {
+    return normalized
+  }
+
+  if (resolveOptions(options).safeFallback) {
+    return [SAFE_TEXT_FALLBACK]
+  }
+
+  return []
+}
+
+export function normalizePairs(pairs?: AnswerPairData[]): AnswerPairData[] {
+  return (pairs ?? [])
+    .map((pair) => ({
+      term: normalizeText(pair.term),
+      desc: normalizeText(pair.desc),
+    }))
+    .filter((pair) => pair.term || pair.desc)
+}
+
+export function adaptGlossaryProps(
+  section: Pick<AnswerSectionData, 'pairs' | 'body'>,
+  options?: AdapterOptions,
+): GlossaryListProps {
+  const normalized = normalizePairs(section.pairs)
+  if (normalized.length > 0) {
+    return {
+      items: normalized.map((pair, index) => ({
+        term: pair.term || `Термин ${index + 1}`,
+        definition: pair.desc || SAFE_TEXT_FALLBACK,
+      })),
+    }
+  }
+
+  if (!resolveOptions(options).safeFallback) {
+    return { items: [] }
+  }
+
+  return {
+    items: [
+      {
+        term: 'Термин 1',
+        definition: toSafeText(section.body),
+      },
+    ],
+  }
+}
+
+export function adaptTimelineProps(
+  section: Pick<AnswerSectionData, 'items' | 'body'>,
+  options?: AdapterOptions,
+): StepTimelineProps {
+  const steps = adaptItems(section, options).map((item): StepTimelineProps['steps'][number] => ({
+    content: item,
+  }))
+
+  return { steps }
+}
+
+export function normalizeColumns(columns?: AnswerColumnData[]): ComparisonColumn[] {
+  return (columns ?? [])
+    .map((column) => ({
+      title: normalizeText(column.title),
+      items: normalizeStringItems(column.items),
+    }))
+    .filter((column) => column.title || column.items.length > 0)
+}
+
+export function adaptColumns(
+  section: Pick<AnswerSectionData, 'columns' | 'body'>,
+  options?: AdapterOptions,
+): ComparisonColumn[] {
+  const normalized = normalizeColumns(section.columns)
+  if (normalized.length > 0) {
+    return normalized.map((column, index) => ({
+      title: column.title || `Колонка ${index + 1}`,
+      items: column.items.length > 0 ? column.items : [SAFE_TEXT_FALLBACK],
+    }))
+  }
+
+  if (!resolveOptions(options).safeFallback) {
+    return []
+  }
+
+  return [
+    {
+      title: 'Колонка 1',
+      items: [toSafeText(section.body)],
+    },
+  ]
+}
+
+function normalizeTableRows(rows: AnswerTableData['rows']): string[][] {
+  return rows
+    .map((row) => row.map((cell) => normalizeText(cell)))
+    .filter((row) => row.some(Boolean))
+}
+
+export function normalizeTable(table?: AnswerTableData): ComparisonTable | null {
+  if (!table) {
+    return null
+  }
+
+  const headers = normalizeStringItems(table.headers)
+  const rows = normalizeTableRows(table.rows)
+  if (headers.length === 0 || rows.length === 0) {
+    return null
+  }
+
+  return {
+    headers,
+    rows: rows.map((row) => headers.map((_, index) => row[index] || SAFE_TEXT_FALLBACK)),
+  }
+}
+
+export function adaptTable(
+  section: Pick<AnswerSectionData, 'table' | 'body'>,
+  options?: AdapterOptions,
+): ComparisonTable | null {
+  const normalized = normalizeTable(section.table)
+  if (normalized) {
+    return normalized
+  }
+
+  if (!resolveOptions(options).safeFallback) {
+    return null
+  }
+
+  return {
+    headers: ['Пункт'],
+    rows: [[toSafeText(section.body)]],
+  }
+}
