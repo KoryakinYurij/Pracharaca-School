@@ -17,7 +17,7 @@ interface ShapeConfig {
 }
 
 const TARGET_FPS = 30
-const PARALLAX_MAX_OFFSET = 0.038
+const PARALLAX_MAX_OFFSET = 0.2
 const PARALLAX_EASING = 2.6
 
 const clamp = (value: number, min: number, max: number) => {
