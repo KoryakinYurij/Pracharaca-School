@@ -87,6 +87,16 @@ const SHAPES: ShapeConfig[] = [
   },
 ]
 
+const DERIVED_SHAPES = SHAPES.map((shape) => ({
+  ...shape,
+  waveSpeed: 0.25 + shape.drift * 0.4,
+  hSpeed: (0.25 + shape.drift * 0.4) * 0.75,
+  hPhase: shape.phase * 1.3,
+  spinX: shape.spin * 0.62,
+  spinY: shape.spin * 1.05,
+  spinZ: shape.spin * 0.14,
+}))
+
 export function BackgroundShapes() {
   const prefersReducedMotion = useReducedMotion()
   const { invalidate } = useThree()
@@ -208,23 +218,22 @@ export function BackgroundShapes() {
       sceneGroup.rotation.y = pointerOffsetRef.current.x * 0.36
     }
 
-    SHAPES.forEach((shape, index) => {
+    DERIVED_SHAPES.forEach((shape, index) => {
       const group = groupRefs.current[index]
 
       if (!group) {
         return
       }
 
-      const waveSpeed = 0.25 + shape.drift * 0.4
-      const verticalWave = Math.sin(elapsed * waveSpeed + shape.phase)
-      const horizontalWave = Math.cos(elapsed * (waveSpeed * 0.75) + shape.phase * 1.3)
+      const verticalWave = Math.sin(elapsed * shape.waveSpeed + shape.phase)
+      const horizontalWave = Math.cos(elapsed * shape.hSpeed + shape.hPhase)
       const spinPulse = 0.88 + Math.sin(elapsed * 0.24 + shape.phase) * 0.14
 
       group.position.x = shape.position[0] + horizontalWave * shape.drift * 0.26
       group.position.y = shape.position[1] + verticalWave * shape.drift * 1.08
-      group.rotation.x += delta * shape.spin * 0.62 * spinPulse
-      group.rotation.y += delta * shape.spin * 1.05
-      group.rotation.z += delta * shape.spin * 0.14
+      group.rotation.x += delta * shape.spinX * spinPulse
+      group.rotation.y += delta * shape.spinY
+      group.rotation.z += delta * shape.spinZ
     })
   })
 
