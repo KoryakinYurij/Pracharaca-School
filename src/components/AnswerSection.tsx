@@ -124,13 +124,13 @@ export const AnswerSection = memo(function AnswerSection({ section }: AnswerSect
 
   return (
     <section className={clsx('border-l-2 py-2 pl-4 sm:py-3 sm:pl-5', meta.cardClassName)}>
-      <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.13em] text-graphite/60">
+      <h4 className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.13em] text-graphite/60">
         <Icon className={clsx('h-4 w-4', iconColor)} aria-hidden="true" />
         <span>{section.title ?? meta.label}</span>
         {isLegacy && (
-          <Clock className="ml-1 h-3 w-3 text-graphite/40" aria-label="Fallback rendering" />
+          <Clock className="ml-1 h-3 w-3 text-graphite/40" aria-label="Устаревший формат" />
         )}
-      </div>
+      </h4>
       {renderSectionBody(section)}
     </section>
   )
