@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { TopicCard } from '../components/TopicCard'
 import { getTopics } from '../content/loader'
+import { t } from '../locales'
 
 export function TopicsListingPage() {
   const prefersReducedMotion = useReducedMotion()
@@ -26,7 +27,7 @@ export function TopicsListingPage() {
   }
 
   return (
-    <section aria-label="Темы" className="mx-auto max-w-7xl space-y-5 px-4 py-12 sm:px-6 lg:px-8">
+    <section aria-label={t('topics.ariaLabel')} className="mx-auto max-w-7xl space-y-5 px-4 py-12 sm:px-6 lg:px-8">
       {import.meta.env.DEV && (
         <div className="mb-4">
           <Link
@@ -39,7 +40,7 @@ export function TopicsListingPage() {
         </div>
       )}
 
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-graphite/70">Темы</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-graphite/70">{t('topics.heading')}</p>
 
       <motion.ul
         className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"

@@ -5,6 +5,7 @@ import { DividerOrnament } from '../components/DividerOrnament'
 import { Header } from '../components/Header'
 import { LessonCard } from '../components/LessonCard'
 import { getLessonsForTopic, getTopicBySlug } from '../content/loader'
+import { t } from '../locales'
 
 export function TopicPage() {
   const prefersReducedMotion = useReducedMotion()
@@ -16,14 +17,14 @@ export function TopicPage() {
   if (!topic) {
     return (
       <div className="noble-card p-8 text-center sm:p-10">
-        <h1 className="font-display text-3xl text-graphite">Тема не найдена</h1>
-        <p className="mt-3 text-graphite/75">Проверьте ссылку или вернитесь на главную.</p>
+        <h1 className="font-display text-3xl text-graphite">{t('topic.notFound')}</h1>
+        <p className="mt-3 text-graphite/75">{t('topic.notFoundHint')}</p>
         <Link
           to="/"
           className="focus-ring mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/45 bg-gold/10 px-5 py-2 text-sm font-medium text-gold-dark"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          На главную
+          {t('topic.backToHome')}
         </Link>
       </div>
     )
@@ -38,7 +39,7 @@ export function TopicPage() {
           className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-full border border-border/90 bg-ivory/80 px-4 py-2 text-sm font-medium text-graphite/85 shadow-soft backdrop-blur-sm transition-colors hover:border-gold/60 hover:text-graphite"
         >
           <ArrowLeft className="h-4 w-4 text-gold/80" aria-hidden="true" />
-          К темам
+          {t('topic.backToTopics')}
         </Link>
       </div>
       <div className="rounded-2xl bg-ivory/80 px-5 py-6 backdrop-blur-sm sm:px-8 sm:py-8">
@@ -46,8 +47,8 @@ export function TopicPage() {
         <DividerOrnament />
       </div>
 
-      <section aria-label="Список уроков" className="space-y-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-graphite/70">Уроки</p>
+      <section aria-label={t('topic.lessonsAriaLabel')} className="space-y-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-graphite/70">{t('topic.lessonsHeading')}</p>
 
         <motion.div
           className="grid gap-4 sm:gap-5"
@@ -57,9 +58,9 @@ export function TopicPage() {
             prefersReducedMotion
               ? undefined
               : {
-                  hidden: {},
-                  show: { transition: { staggerChildren: 0.06 } },
-                }
+                hidden: {},
+                show: { transition: { staggerChildren: 0.06 } },
+              }
           }
         >
           {lessons.map((lesson) => (

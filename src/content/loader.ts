@@ -1,27 +1,6 @@
 import type { LessonData, TopicData } from './types'
-
-function isLessonData(data: unknown): data is LessonData {
-  if (typeof data !== 'object' || data === null) return false
-  const d = data as Record<string, unknown>
-  return (
-    typeof d.slug === 'string' &&
-    typeof d.order === 'number' &&
-    typeof d.title === 'string' &&
-    Array.isArray(d.cards)
-  )
-}
-
-function isTopicData(data: unknown): data is TopicData {
-  if (typeof data !== 'object' || data === null) return false
-  const d = data as Record<string, unknown>
-  return (
-    typeof d.slug === 'string' &&
-    typeof d.order === 'number' &&
-    typeof d.title === 'string' &&
-    typeof d.subtitle === 'string' &&
-    typeof d.description === 'string'
-  )
-}
+import { LessonDataSchema, TopicDataSchema } from './schemas'
+import { t } from '../locales'
 
 const topicModules = import.meta.glob<{ default: TopicData }>(
   '/content/topics/*/meta.json',
@@ -41,7 +20,7 @@ function extractTopicSlug(filePath: string): string {
   const parts = filePath.split('/')
   const topicsIdx = parts.indexOf('topics')
   if (topicsIdx === -1 || topicsIdx + 1 >= parts.length) {
-    throw new Error(`Невозможно извлечь slug темы из пути: ${filePath}`)
+    throw new Error(`${t('loader.cantExtractSlug')}: ${filePath}`)
   }
   return parts[topicsIdx + 1]
 }
@@ -49,27 +28,29 @@ function extractTopicSlug(filePath: string): string {
 const topicsBySlug = new Map<string, TopicData>()
 
 for (const [path, mod] of Object.entries(topicModules)) {
-  const data = mod.default
-  if (!isTopicData(data)) {
+  const result = TopicDataSchema.safeParse(mod.default)
+  if (!result.success) {
+    const issues = result.error.issues.map((i) => `  - ${i.path.join('.')}: ${i.message}`).join('\n')
     throw new Error(
-      `Ошибка валидации данных темы в файле: ${path}. Обязательные поля: slug (string), order (number), title (string), subtitle (string), description (string).`,
+      `${t('loader.topicValidationError')}: ${path}\n${issues}`,
     )
   }
-  topicsBySlug.set(extractTopicSlug(path), data)
+  topicsBySlug.set(extractTopicSlug(path), result.data)
 }
 
 const lessonsByTopic = new Map<string, LessonData[]>()
 
 for (const [path, mod] of Object.entries(lessonModules)) {
-  const data = mod.default
-  if (!isLessonData(data)) {
+  const result = LessonDataSchema.safeParse(mod.default)
+  if (!result.success) {
+    const issues = result.error.issues.map((i) => `  - ${i.path.join('.')}: ${i.message}`).join('\n')
     throw new Error(
-      `Ошибка валидации данных урока в файле: ${path}. Обязательные поля: slug (string), order (number), title (string), cards (array).`,
+      `${t('loader.lessonValidationError')}: ${path}\n${issues}`,
     )
   }
   const topicSlug = extractTopicSlug(path)
   const list = lessonsByTopic.get(topicSlug) ?? []
-  list.push(data)
+  list.push(result.data)
   lessonsByTopic.set(topicSlug, list)
 }
 

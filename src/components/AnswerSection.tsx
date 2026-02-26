@@ -12,9 +12,11 @@ import {
   ScrollText,
 } from 'lucide-react'
 import type { AnswerKind, AnswerSectionData } from '../content/types'
+import { t } from '../locales'
 import {
   renderSectionBody,
 } from './answerRenderers'
+import { ErrorBoundary } from './ErrorBoundary'
 
 interface AnswerSectionProps {
   section: AnswerSectionData
@@ -30,85 +32,85 @@ interface SectionMeta {
 const sectionMeta: Record<AnswerKind, SectionMeta> = {
   // New-rendered kinds (use rich inner components with their own styling)
   summary: {
-    label: 'Выжимка',
+    label: t('section.summary'),
     icon: Lightbulb,
     cardClassName: 'border-gold/20',
     isLegacyOnly: false,
   },
   details: {
-    label: 'Детали',
+    label: t('section.details'),
     icon: ScrollText,
     cardClassName: 'border-border/60',
     isLegacyOnly: true,
   },
   steps: {
-    label: 'Шаги',
+    label: t('section.steps'),
     icon: CheckCircle2,
     cardClassName: 'border-border/60',
     isLegacyOnly: false,
   },
   example: {
-    label: 'Пример',
+    label: t('section.example'),
     icon: BookText,
     cardClassName: 'border-gold/20',
     isLegacyOnly: false,
   },
   note: {
-    label: 'Заметка',
+    label: t('section.note'),
     icon: BadgeInfo,
     cardClassName: 'border-border/40',
     isLegacyOnly: false,
   },
   warning: {
-    label: 'Важно',
+    label: t('section.warning'),
     icon: AlertTriangle,
     cardClassName: 'border-amber-600/30',
     isLegacyOnly: false,
   },
   quote: {
-    label: 'Цитата',
+    label: t('section.quote'),
     icon: Quote,
     cardClassName: 'border-gold/20',
     isLegacyOnly: false,
   },
   definition: {
-    label: 'Определения',
+    label: t('section.definition'),
     icon: BookText,
     cardClassName: 'border-gold/20',
     isLegacyOnly: false,
   },
   checklist: {
-    label: 'Чеклист',
+    label: t('section.checklist'),
     icon: CheckCircle2,
     cardClassName: 'border-border/40',
     isLegacyOnly: false,
   },
   pitfalls: {
-    label: 'Частые ошибки',
+    label: t('section.pitfalls'),
     icon: AlertTriangle,
     cardClassName: 'border-amber-600/30',
     isLegacyOnly: false,
   },
   dosdonts: {
-    label: 'Делай / Не делай',
+    label: t('section.dosdonts'),
     icon: BadgeInfo,
     cardClassName: 'border-border/60',
     isLegacyOnly: true,
   },
   compare: {
-    label: 'Сравнение',
+    label: t('section.compare'),
     icon: ScrollText,
     cardClassName: 'border-border/60',
     isLegacyOnly: true,
   },
   mnemonic: {
-    label: 'Запоминалка',
+    label: t('section.mnemonic'),
     icon: Lightbulb,
     cardClassName: 'border-gold/20',
     isLegacyOnly: false,
   },
   references: {
-    label: 'Источники',
+    label: t('section.references'),
     icon: BookText,
     cardClassName: 'border-border/30',
     isLegacyOnly: false,
@@ -119,7 +121,7 @@ export const AnswerSection = memo(function AnswerSection({ section }: AnswerSect
   const meta = sectionMeta[section.kind]
   const Icon = meta.icon
   const iconColor = (section.kind === 'warning' || section.kind === 'pitfalls') ? 'text-amber-700/60' : 'text-gold/60'
-  const isLegacy = section.migration?.rendererOrder?.[0] === 'legacy' || 
+  const isLegacy = section.migration?.rendererOrder?.[0] === 'legacy' ||
     (!section.migration && meta.isLegacyOnly)
 
   return (
@@ -131,7 +133,9 @@ export const AnswerSection = memo(function AnswerSection({ section }: AnswerSect
           <Clock className="ml-1 h-3 w-3 text-graphite/40" aria-label="Fallback rendering" />
         )}
       </div>
-      {renderSectionBody(section)}
+      <ErrorBoundary variant="inline">
+        {renderSectionBody(section)}
+      </ErrorBoundary>
     </section>
   )
 })

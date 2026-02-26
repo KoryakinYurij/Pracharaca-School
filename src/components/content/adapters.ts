@@ -6,8 +6,9 @@ import type {
 } from '../../content/types'
 import type { StepTimelineProps } from './ComplexStructures'
 import type { GlossaryListProps } from './Lists'
+import { t } from '../../locales'
 
-export const SAFE_TEXT_FALLBACK = 'Нет данных'
+export const SAFE_TEXT_FALLBACK = t('fallback.noData')
 
 export interface AdapterOptions {
   safeFallback?: boolean
@@ -98,7 +99,7 @@ export function adaptGlossaryProps(
   if (normalized.length > 0) {
     return {
       items: normalized.map((pair, index) => ({
-        term: pair.term || `Термин ${index + 1}`,
+        term: pair.term || `${t('fallback.termN')} ${index + 1}`,
         definition: pair.desc || SAFE_TEXT_FALLBACK,
       })),
     }
@@ -111,7 +112,7 @@ export function adaptGlossaryProps(
   return {
     items: [
       {
-        term: 'Термин 1',
+        term: `${t('fallback.termN')} 1`,
         definition: toSafeText(section.body),
       },
     ],
@@ -145,7 +146,7 @@ export function adaptColumns(
   const normalized = normalizeColumns(section.columns)
   if (normalized.length > 0) {
     return normalized.map((column, index) => ({
-      title: column.title || `Колонка ${index + 1}`,
+      title: column.title || `${t('fallback.columnN')} ${index + 1}`,
       items: column.items.length > 0 ? column.items : [SAFE_TEXT_FALLBACK],
     }))
   }
@@ -156,7 +157,7 @@ export function adaptColumns(
 
   return [
     {
-      title: 'Колонка 1',
+      title: `${t('fallback.columnN')} 1`,
       items: [toSafeText(section.body)],
     },
   ]
@@ -199,7 +200,7 @@ export function adaptTable(
   }
 
   return {
-    headers: ['Пункт'],
+    headers: [t('fallback.headerItem')],
     rows: [[toSafeText(section.body)]],
   }
 }
