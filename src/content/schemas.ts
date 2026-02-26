@@ -43,7 +43,6 @@ export const AnswerSectionDataSchema = z.object({
     variant: z.string().optional(),
     visualHint: z.string().optional(),
     author: z.string().optional(),
-    migration: z.record(z.string(), z.unknown()).optional(),
 })
 
 export const QACardDataSchema = z.object({

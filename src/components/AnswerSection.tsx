@@ -121,8 +121,7 @@ export const AnswerSection = memo(function AnswerSection({ section }: AnswerSect
   const meta = sectionMeta[section.kind]
   const Icon = meta.icon
   const iconColor = (section.kind === 'warning' || section.kind === 'pitfalls') ? 'text-amber-700/60' : 'text-gold/60'
-  const isLegacy = section.migration?.rendererOrder?.[0] === 'legacy' ||
-    (!section.migration && meta.isLegacyOnly)
+  const isLegacy = meta.isLegacyOnly
 
   return (
     <section className={clsx('border-l-2 py-2 pl-4 sm:py-3 sm:pl-5', meta.cardClassName)}>

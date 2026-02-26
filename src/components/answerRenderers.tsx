@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import type { ReactNode } from 'react'
 import type { AnswerSectionData } from '../content/types'
-import { resolveMigrationStrategy } from '../content/migrationMap'
 import {
   BadgeList,
   Callout,
@@ -209,6 +208,8 @@ function renderNewByKind(section: AnswerSectionData): ReactNode | null {
       return renderNewMnemonic(section)
     case 'references':
       return renderNewReferences(section)
+    case 'details':
+      return renderText(section)
     default:
       return null
   }
@@ -226,20 +227,9 @@ export function renderLegacyByKind(section: AnswerSectionData): ReactNode {
 }
 
 export function renderSectionBody(section: AnswerSectionData): ReactNode {
-  const order = section.migration?.rendererOrder ?? resolveMigrationStrategy(section.kind).rendererOrder
-  for (const renderer of order) {
-    if (renderer === 'new') {
-      const content = renderNewByKind(section)
-      if (content) {
-        return content
-      }
-      continue
-    }
-
-    if (renderer === 'legacy') {
-      return renderLegacyByKind(section)
-    }
+  const content = renderNewByKind(section)
+  if (content) {
+    return content
   }
-
   return renderLegacyByKind(section)
 }

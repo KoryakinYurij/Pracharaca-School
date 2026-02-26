@@ -1,9 +1,0 @@
-Task 7 adapter verification
-
-Command: npm run test -- src/test/migration-adapter.test.tsx
-Result: PASS (1 file, 5 tests)
-
-Command: npm run build
-Result: PASS (tsc -b && vite build)
-
-Notes: Adapter utilities compile and test green in isolation.

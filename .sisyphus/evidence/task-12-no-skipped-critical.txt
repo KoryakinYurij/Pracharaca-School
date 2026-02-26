@@ -1,4 +1,0 @@
-critical migration skip/todo check: PASS
-migration-adapter.test.tsx: skip=false todo=false
-migration-renderers-red.test.tsx: skip=false todo=false
-migration-routing-red.test.tsx: skip=false todo=false

@@ -1,2 +1,0 @@
-sections_without_optional_metadata=45
-optional-metadata-safe=ok

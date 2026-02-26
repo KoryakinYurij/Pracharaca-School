@@ -8,23 +8,14 @@ function makeSection(overrides: Partial<AnswerSectionData>): AnswerSectionData {
     kind: 'summary',
     title: 'Суть',
     body: 'Базовый текст секции',
-    migration: {
-      rendererOrder: ['new', 'legacy'],
-      isKnownKind: true,
-    },
     ...overrides,
   }
 }
 
-describe('migration renderer behavior', () => {
-  it('renders summary sections through new callout renderer when order is new -> legacy', () => {
+describe('renderer routing (post-migration)', () => {
+  it('renders summary sections through new callout renderer', () => {
     const section = makeSection({
       body: 'Эта секция должна идти через новый callout-рендерер.',
-      migration: {
-        target: 'callout',
-        rendererOrder: ['new', 'legacy'],
-        isKnownKind: true,
-      },
     })
 
     render(<AnswerSection section={section} />)
@@ -33,52 +24,39 @@ describe('migration renderer behavior', () => {
     expect(bodyText.closest('div.rounded-r-lg')).toBeInTheDocument()
   })
 
-  it('keeps fallback rendering active when kind has no new renderer implementation', () => {
+  it('renders details kind through new text renderer path', () => {
     const section = makeSection({
       kind: 'details',
       title: 'Детали',
-      body: 'Этот блок должен рендериться через legacy fallback.',
-      migration: {
-        rendererOrder: ['new', 'legacy'],
-        isKnownKind: true,
-      },
+      body: 'Этот блок должен рендериться как текст через новый путь.',
     })
 
     render(<AnswerSection section={section} />)
 
-    const fallbackText = screen.getByText('Этот блок должен рендериться через legacy fallback.')
-    expect(fallbackText.tagName.toLowerCase()).toBe('p')
-    expect(fallbackText.closest('div.rounded-r-lg')).not.toBeInTheDocument()
+    const text = screen.getByText('Этот блок должен рендериться как текст через новый путь.')
+    expect(text.tagName.toLowerCase()).toBe('p')
   })
 
-  it('supports mixed migrated and fallback sections in one answer without dropping either path', () => {
-    const migratedSummary = makeSection({
+  it('supports both new-rendered and legacy-rendered sections side by side', () => {
+    const summarySection = makeSection({
       kind: 'summary',
       title: 'Новая секция',
       body: 'Новый путь: callout',
-      migration: {
-        rendererOrder: ['new', 'legacy'],
-        isKnownKind: true,
-      },
     })
 
-    const legacyCompare = makeSection({
+    const compareSection = makeSection({
       kind: 'compare',
       title: 'Старый путь',
       table: {
         headers: ['Подход', 'Итог'],
         rows: [['Legacy', 'Стабильно']],
       },
-      migration: {
-        rendererOrder: ['legacy'],
-        isKnownKind: true,
-      },
     })
 
     render(
       <>
-        <AnswerSection section={migratedSummary} />
-        <AnswerSection section={legacyCompare} />
+        <AnswerSection section={summarySection} />
+        <AnswerSection section={compareSection} />
       </>,
     )
 

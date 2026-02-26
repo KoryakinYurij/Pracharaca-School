@@ -1,9 +1,0 @@
-
-[2026-02-24T13:48:45+07:00] Task 1 fallback verification
-{"kind":"fake-kind-for-fallback","isKnownKind":false,"target":"paragraph","rendererOrder":["legacy"],"deprecation":{"status":"active","legacyPattern":"renderText","wave":"wave-3","note":"Unknown or unready kinds always use legacy text rendering for non-breaking compatibility."}}
-
-[2026-02-24T13:54:38+07:00] task-1 migration map fallback
-kind brand_new_kind
-isKnownKind false
-rendererOrder legacy
-target paragraph

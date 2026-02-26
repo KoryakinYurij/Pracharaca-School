@@ -1,5 +1,0 @@
-route=/kitchen-sink
-hero=1
-quoteGlyphCount=1
-hasMdPb0=false
-consoleErrors=0

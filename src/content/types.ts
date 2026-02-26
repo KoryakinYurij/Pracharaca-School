@@ -29,20 +29,6 @@ export interface AnswerTableData {
   rows: string[][]
 }
 
-export type MigrationRendererEngine = 'new' | 'legacy'
-
-export type MigrationDeprecationStatus = 'active' | 'overlap-legacy'
-
-export interface AnswerSectionMigrationMetadata {
-  target?: string
-  rendererOrder?: readonly MigrationRendererEngine[]
-  isKnownKind?: boolean
-  deprecationStatus?: MigrationDeprecationStatus
-  legacyPattern?: string
-  wave?: string
-  note?: string
-}
-
 export interface AnswerSectionData {
   kind: AnswerKind
   title?: string
@@ -54,7 +40,6 @@ export interface AnswerSectionData {
   variant?: string
   visualHint?: string
   author?: string
-  migration?: AnswerSectionMigrationMetadata
 }
 
 export interface QACardData {
