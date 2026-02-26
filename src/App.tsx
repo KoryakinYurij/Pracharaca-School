@@ -1,12 +1,16 @@
 import { AnimatePresence } from 'framer-motion'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { PageTransition } from './components/PageTransition'
 import { ScrollToTop } from './components/ScrollToTop'
-import { ContentKitchenSink } from './pages/ContentKitchenSink'
 import { LessonPage } from './pages/LessonPage'
 import { TopicPage } from './pages/TopicPage'
 import { TopicsListingPage } from './pages/TopicsListingPage'
+
+const ContentKitchenSink = lazy(() =>
+  import('./pages/ContentKitchenSink').then((m) => ({ default: m.ContentKitchenSink }))
+)
 
 function AppContent() {
   const location = useLocation()
@@ -46,7 +50,9 @@ function AppContent() {
               path="/kitchen-sink"
               element={
                 <PageTransition>
-                  <ContentKitchenSink />
+                  <Suspense fallback={<div className="p-8 text-center text-graphite/50">Loading…</div>}>
+                    <ContentKitchenSink />
+                  </Suspense>
                 </PageTransition>
               }
             />

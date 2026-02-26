@@ -9,12 +9,11 @@ import {
   GlossaryList,
   GoldDotList,
   PrincipleBlock,
+  SAFE_TEXT_FALLBACK,
   adaptBody,
   adaptGlossaryProps,
   adaptItems,
 } from './content'
-
-export const EMPTY_STATE = 'Нет данных'
 
 export function getText(section: AnswerSectionData) {
   return section.body?.trim() ?? ''
@@ -25,7 +24,7 @@ export function normalizeItems(items?: string[]) {
 }
 
 export function renderText(section: AnswerSectionData, className?: string) {
-  const text = getText(section) || EMPTY_STATE
+  const text = getText(section) || SAFE_TEXT_FALLBACK
   return <p className={clsx('whitespace-pre-line text-sm text-graphite/85 sm:text-base', className)}>{text}</p>
 }
 
@@ -49,7 +48,7 @@ export function renderColumns(
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-graphite/70 sm:text-base">{EMPTY_STATE}</p>
+            <p className="text-sm text-graphite/70 sm:text-base">{SAFE_TEXT_FALLBACK}</p>
           )}
         </section>
       ))}
@@ -84,7 +83,7 @@ export function renderCompare(section: AnswerSectionData) {
   const safeRows = tableRows.map((row) =>
     tableHeaders.map((header, colIndex) => ({
       header,
-      value: row[colIndex] || EMPTY_STATE,
+      value: row[colIndex] || SAFE_TEXT_FALLBACK,
     })),
   )
 

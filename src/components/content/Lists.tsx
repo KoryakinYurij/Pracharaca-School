@@ -10,7 +10,7 @@ export function GoldDotList({ items, className }: GoldDotListProps) {
   return (
     <ul className={clsx('space-y-4 font-body text-lg text-graphite', className)}>
       {items.map((item, index) => (
-        <li key={index} className="flex items-start">
+        <li key={`dot-${index}`} className="flex items-start">
           <span className="mt-1 mr-3 select-none text-2xl leading-none text-gold">•</span>
           <span>{item}</span>
         </li>
@@ -28,7 +28,7 @@ export function BadgeList({ items, className }: BadgeListProps) {
   return (
     <ol className={clsx('space-y-6', className)}>
       {items.map((item, index) => (
-        <li key={index} className="flex gap-4">
+        <li key={`badge-${index}`} className="flex gap-4">
           <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-graphite font-body text-sm font-bold text-ivory">
             {index + 1}
           </div>
@@ -54,7 +54,7 @@ export function GlossaryList({ items, className }: GlossaryListProps) {
     <dl className={clsx('space-y-4', className)}>
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item.term || `glossary-${index}`}
           className="rounded-lg bg-ivory p-6 shadow-card transition-shadow duration-300 hover:shadow-lg"
         >
           <dt className="mb-2 font-display text-xl font-semibold text-gold">{item.term}</dt>

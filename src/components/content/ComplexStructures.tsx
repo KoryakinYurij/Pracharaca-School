@@ -16,7 +16,7 @@ export function StepTimeline({ steps, className }: StepTimelineProps) {
   return (
     <div className={clsx('relative ml-4 space-y-12 border-l-2 border-border/50 pl-8', className)}>
       {steps.map((step, index) => (
-        <div key={index} className="relative group">
+        <div key={step.title || `step-${index}`} className="relative group">
           <div className="absolute -left-[2.25rem] top-0 h-4 w-4 rounded-full border-2 border-gold bg-ivory transition-colors duration-300 group-hover:bg-gold" />
 
           <div className="relative overflow-hidden rounded-xl2 bg-ivory p-8 shadow-card transition-transform duration-300 hover:-translate-y-1">
@@ -51,7 +51,7 @@ export function VisualFormula({ parts, className }: VisualFormulaProps) {
   return (
     <div className={clsx('flex flex-wrap items-end justify-center gap-4 py-8 md:gap-8', className)}>
       {parts.map((part, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={`${part.text}-${index}`}>
           <div className="text-center group">
             <div className="font-display text-4xl text-gold md:text-5xl">{part.text}</div>
             {part.caption && (
@@ -83,9 +83,9 @@ export interface MetricDashboardProps {
 export function MetricDashboard({ metrics, className }: MetricDashboardProps) {
   return (
     <div className={clsx('grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3', className)}>
-      {metrics.map((metric, index) => (
+      {metrics.map((metric) => (
         <div
-          key={index}
+          key={`${metric.label}-${metric.value}`}
           className="rounded-xl2 border border-transparent bg-ivory p-8 text-center shadow-card transition-shadow duration-300 hover:border-gold/20"
         >
           <div className="font-display text-5xl text-graphite md:text-6xl">{metric.value}</div>
