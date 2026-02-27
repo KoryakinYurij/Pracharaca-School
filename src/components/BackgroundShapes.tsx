@@ -87,6 +87,18 @@ const SHAPES: ShapeConfig[] = [
   },
 ]
 
+// Pre-calculate invariant physics constants outside the render loop
+const OPTIMIZED_SHAPES = SHAPES.map(shape => {
+  const waveSpeed = 0.25 + shape.drift * 0.4
+  return {
+    ...shape,
+    waveSpeed,
+    // Previously: Math.cos(elapsed * (waveSpeed * 0.75) + shape.phase * 1.3)
+    horizontalSpeed: waveSpeed * 0.75,
+    horizontalPhase: shape.phase * 1.3,
+  }
+})
+
 export function BackgroundShapes() {
   const prefersReducedMotion = useReducedMotion()
   const { invalidate } = useThree()
@@ -208,16 +220,16 @@ export function BackgroundShapes() {
       sceneGroup.rotation.y = pointerOffsetRef.current.x * 0.36
     }
 
-    SHAPES.forEach((shape, index) => {
+    OPTIMIZED_SHAPES.forEach((shape, index) => {
       const group = groupRefs.current[index]
 
       if (!group) {
         return
       }
 
-      const waveSpeed = 0.25 + shape.drift * 0.4
-      const verticalWave = Math.sin(elapsed * waveSpeed + shape.phase)
-      const horizontalWave = Math.cos(elapsed * (waveSpeed * 0.75) + shape.phase * 1.3)
+      // Use pre-calculated constants
+      const verticalWave = Math.sin(elapsed * shape.waveSpeed + shape.phase)
+      const horizontalWave = Math.cos(elapsed * shape.horizontalSpeed + shape.horizontalPhase)
       const spinPulse = 0.88 + Math.sin(elapsed * 0.24 + shape.phase) * 0.14
 
       group.position.x = shape.position[0] + horizontalWave * shape.drift * 0.26
@@ -230,7 +242,7 @@ export function BackgroundShapes() {
 
   return (
     <group ref={sceneGroupRef}>
-      {SHAPES.map((shape, index) => (
+      {OPTIMIZED_SHAPES.map((shape, index) => (
         <group
           key={`${shape.geometry}-${index}`}
           ref={(node: Group | null) => {
