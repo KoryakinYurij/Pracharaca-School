@@ -87,6 +87,20 @@ const SHAPES: ShapeConfig[] = [
   },
 ]
 
+const DERIVED_SHAPES = SHAPES.map((shape) => {
+  const waveSpeed = 0.25 + shape.drift * 0.4
+  return {
+    waveSpeed,
+    waveSpeed75: waveSpeed * 0.75,
+    phase13: shape.phase * 1.3,
+    drift026: shape.drift * 0.26,
+    drift108: shape.drift * 1.08,
+    spin062: shape.spin * 0.62,
+    spin105: shape.spin * 1.05,
+    spin014: shape.spin * 0.14,
+  }
+})
+
 export function BackgroundShapes() {
   const prefersReducedMotion = useReducedMotion()
   const { invalidate } = useThree()
@@ -208,24 +222,25 @@ export function BackgroundShapes() {
       sceneGroup.rotation.y = pointerOffsetRef.current.x * 0.36
     }
 
-    SHAPES.forEach((shape, index) => {
-      const group = groupRefs.current[index]
+    for (let i = 0; i < SHAPES.length; i++) {
+      const shape = SHAPES[i]
+      const derived = DERIVED_SHAPES[i]
+      const group = groupRefs.current[i]
 
       if (!group) {
-        return
+        continue
       }
 
-      const waveSpeed = 0.25 + shape.drift * 0.4
-      const verticalWave = Math.sin(elapsed * waveSpeed + shape.phase)
-      const horizontalWave = Math.cos(elapsed * (waveSpeed * 0.75) + shape.phase * 1.3)
+      const verticalWave = Math.sin(elapsed * derived.waveSpeed + shape.phase)
+      const horizontalWave = Math.cos(elapsed * derived.waveSpeed75 + derived.phase13)
       const spinPulse = 0.88 + Math.sin(elapsed * 0.24 + shape.phase) * 0.14
 
-      group.position.x = shape.position[0] + horizontalWave * shape.drift * 0.26
-      group.position.y = shape.position[1] + verticalWave * shape.drift * 1.08
-      group.rotation.x += delta * shape.spin * 0.62 * spinPulse
-      group.rotation.y += delta * shape.spin * 1.05
-      group.rotation.z += delta * shape.spin * 0.14
-    })
+      group.position.x = shape.position[0] + horizontalWave * derived.drift026
+      group.position.y = shape.position[1] + verticalWave * derived.drift108
+      group.rotation.x += delta * derived.spin062 * spinPulse
+      group.rotation.y += delta * derived.spin105
+      group.rotation.z += delta * derived.spin014
+    }
   })
 
   return (
