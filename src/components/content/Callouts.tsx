@@ -31,12 +31,19 @@ export function Callout({ type, title, children, icon, className }: CalloutProps
     insight: 'text-gold',
   }[type]
 
+  const srLabel = {
+    important: 'Important',
+    warning: 'Warning',
+    insight: 'Note',
+  }[type]
+
   return (
     <div className={clsx('my-6 flex gap-4 rounded-r-lg p-6 shadow-sm', styles[type], className)}>
       <div className={clsx('flex-shrink-0 pt-1', iconColor)}>
-        {icon || <DefaultIcon className="h-6 w-6" />}
+        {icon || <DefaultIcon className="h-6 w-6" aria-hidden="true" />}
       </div>
       <div className="flex-1">
+        <span className="sr-only">{srLabel}: </span>
         {title && (
           <h4
             className={clsx(
