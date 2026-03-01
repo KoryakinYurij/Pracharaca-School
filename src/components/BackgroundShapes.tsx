@@ -135,16 +135,17 @@ export function BackgroundShapes() {
         sceneGroup.rotation.set(0, 0, 0)
       }
 
-      SHAPES.forEach((shape, index) => {
+      for (let index = 0; index < SHAPES.length; index++) {
+        const shape = SHAPES[index]
         const group = groupRefs.current[index]
 
         if (!group) {
-          return
+          continue
         }
 
         group.position.set(shape.position[0], shape.position[1], shape.position[2])
         group.rotation.set(0, 0, 0)
-      })
+      }
 
       return
     }
@@ -208,11 +209,12 @@ export function BackgroundShapes() {
       sceneGroup.rotation.y = pointerOffsetRef.current.x * 0.36
     }
 
-    SHAPES.forEach((shape, index) => {
+    for (let index = 0; index < SHAPES.length; index++) {
+      const shape = SHAPES[index]
       const group = groupRefs.current[index]
 
       if (!group) {
-        return
+        continue
       }
 
       const waveSpeed = 0.25 + shape.drift * 0.4
@@ -225,7 +227,7 @@ export function BackgroundShapes() {
       group.rotation.x += delta * shape.spin * 0.62 * spinPulse
       group.rotation.y += delta * shape.spin * 1.05
       group.rotation.z += delta * shape.spin * 0.14
-    })
+    }
   })
 
   return (
