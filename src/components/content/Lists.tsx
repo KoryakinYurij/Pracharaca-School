@@ -8,10 +8,12 @@ export interface GoldDotListProps {
 
 export function GoldDotList({ items, className }: GoldDotListProps) {
   return (
-    <ul className={clsx('space-y-4 font-body text-lg text-graphite', className)}>
+    <ul role="list" className={clsx('space-y-4 font-body text-lg text-graphite', className)}>
       {items.map((item, index) => (
         <li key={`dot-${index}`} className="flex items-start">
-          <span className="mt-1 mr-3 select-none text-2xl leading-none text-gold">•</span>
+          <span aria-hidden="true" className="mt-1 mr-3 select-none text-2xl leading-none text-gold">
+            •
+          </span>
           <span>{item}</span>
         </li>
       ))}
@@ -26,10 +28,13 @@ export interface BadgeListProps {
 
 export function BadgeList({ items, className }: BadgeListProps) {
   return (
-    <ol className={clsx('space-y-6', className)}>
+    <ol role="list" className={clsx('space-y-6', className)}>
       {items.map((item, index) => (
         <li key={`badge-${index}`} className="flex gap-4">
-          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-graphite font-body text-sm font-bold text-ivory">
+          <div
+            aria-hidden="true"
+            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-graphite font-body text-sm font-bold text-ivory"
+          >
             {index + 1}
           </div>
           <div className="font-body pt-1 text-lg leading-relaxed text-graphite">{item}</div>
