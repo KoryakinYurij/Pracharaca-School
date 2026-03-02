@@ -31,12 +31,19 @@ export function Callout({ type, title, children, icon, className }: CalloutProps
     insight: 'text-gold',
   }[type]
 
+  const srLabel = {
+    important: 'Important',
+    warning: 'Warning',
+    insight: 'Note',
+  }[type]
+
   return (
     <div className={clsx('my-6 flex gap-4 rounded-r-lg p-6 shadow-sm', styles[type], className)}>
-      <div className={clsx('flex-shrink-0 pt-1', iconColor)}>
+      <div className={clsx('flex-shrink-0 pt-1', iconColor)} aria-hidden="true">
         {icon || <DefaultIcon className="h-6 w-6" />}
       </div>
       <div className="flex-1">
+        <span className="sr-only">{srLabel}: </span>
         {title && (
           <h4
             className={clsx(
@@ -74,7 +81,7 @@ export function MetaphorBlock({ icon, children, className }: MetaphorBlockProps)
         className,
       )}
     >
-      <div className="flex justify-center md:justify-start">
+      <div className="flex justify-center md:justify-start" aria-hidden="true">
         <div className="h-24 w-24 text-graphite/80 [&>svg]:h-full [&>svg]:w-full [&>svg]:stroke-1">
           {icon}
         </div>
