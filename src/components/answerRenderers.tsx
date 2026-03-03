@@ -78,15 +78,15 @@ export function renderDosDonts(section: AnswerSectionData) {
 export function renderCompare(section: AnswerSectionData) {
   const table = section.table
   const tableHeaders = normalizeItems(table?.headers)
-  const tableRows = (table?.rows ?? []).map((row) => row.map((cell) => cell.trim()))
-  const safeRows = tableRows.map((row) =>
+  const rows = table?.rows ?? []
+  const safeRows = rows.map((row) =>
     tableHeaders.map((header, colIndex) => ({
       header,
-      value: row[colIndex] || SAFE_TEXT_FALLBACK,
+      value: row[colIndex]?.trim() || SAFE_TEXT_FALLBACK,
     })),
   )
 
-  if (tableHeaders.length > 0 && tableRows.length > 0) {
+  if (tableHeaders.length > 0 && rows.length > 0) {
     return (
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse break-words text-left text-sm text-graphite/85 sm:text-base">
