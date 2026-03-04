@@ -79,12 +79,18 @@ export function renderCompare(section: AnswerSectionData) {
   const table = section.table
   const tableHeaders = normalizeItems(table?.headers)
   const rows = table?.rows ?? []
-  const safeRows = rows.map((row) =>
-    tableHeaders.map((header, colIndex) => ({
-      header,
-      value: row[colIndex]?.trim() || SAFE_TEXT_FALLBACK,
-    })),
-  )
+  const processedRows = rows.map((row) => {
+    let rowKey = ''
+    const cells = tableHeaders.map((header, colIndex) => {
+      const value = row[colIndex]?.trim() || SAFE_TEXT_FALLBACK
+      rowKey += (colIndex === 0 ? '' : '|') + `${header}:${value}`
+      return {
+        key: `${header}-${value}`,
+        value,
+      }
+    })
+    return { key: rowKey, cells }
+  })
 
   if (tableHeaders.length > 0 && rows.length > 0) {
     return (
@@ -104,10 +110,10 @@ export function renderCompare(section: AnswerSectionData) {
             </tr>
           </thead>
           <tbody>
-            {safeRows.map((row) => (
-              <tr key={row.map((cell) => `${cell.header}:${cell.value}`).join('|')} className="align-top">
-                {row.map((cell) => (
-                  <td key={`${cell.header}-${cell.value}`} className="border-b border-border/60 px-3 py-2">
+            {processedRows.map((row) => (
+              <tr key={row.key} className="align-top">
+                {row.cells.map((cell) => (
+                  <td key={cell.key} className="border-b border-border/60 px-3 py-2">
                     {cell.value}
                   </td>
                 ))}
