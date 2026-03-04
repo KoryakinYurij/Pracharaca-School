@@ -32,9 +32,9 @@ export function Callout({ type, title, children, icon, className }: CalloutProps
   }[type]
 
   const srLabel = {
-    important: 'Важно',
-    warning: 'Внимание',
-    insight: 'Заметка',
+    important: 'Important',
+    warning: 'Warning',
+    insight: 'Note',
   }[type]
 
   return (
