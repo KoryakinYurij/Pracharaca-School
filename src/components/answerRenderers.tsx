@@ -79,12 +79,6 @@ export function renderCompare(section: AnswerSectionData) {
   const table = section.table
   const tableHeaders = normalizeItems(table?.headers)
   const rows = table?.rows ?? []
-  const safeRows = rows.map((row) =>
-    tableHeaders.map((header, colIndex) => ({
-      header,
-      value: row[colIndex]?.trim() || SAFE_TEXT_FALLBACK,
-    })),
-  )
 
   if (tableHeaders.length > 0 && rows.length > 0) {
     return (
@@ -104,13 +98,18 @@ export function renderCompare(section: AnswerSectionData) {
             </tr>
           </thead>
           <tbody>
-            {safeRows.map((row) => (
-              <tr key={row.map((cell) => `${cell.header}:${cell.value}`).join('|')} className="align-top">
-                {row.map((cell) => (
-                  <td key={`${cell.header}-${cell.value}`} className="border-b border-border/60 px-3 py-2">
-                    {cell.value}
-                  </td>
-                ))}
+            {/* Optimized: eliminated the intermediate safeRows mapping allocation. Fallback text is now applied inline. */}
+            {rows.map((row, rowIndex) => (
+              <tr key={rowIndex} className="align-top">
+                {tableHeaders.map((_header, colIndex) => {
+                  const val = row[colIndex]
+                  const cellValue = val ? val.trim() || SAFE_TEXT_FALLBACK : SAFE_TEXT_FALLBACK
+                  return (
+                    <td key={`${rowIndex}-${colIndex}`} className="border-b border-border/60 px-3 py-2">
+                      {cellValue}
+                    </td>
+                  )
+                })}
               </tr>
             ))}
           </tbody>
