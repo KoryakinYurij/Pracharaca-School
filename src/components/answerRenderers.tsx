@@ -79,22 +79,18 @@ export function renderCompare(section: AnswerSectionData) {
   const table = section.table
   const tableHeaders = normalizeItems(table?.headers)
   const rows = table?.rows ?? []
-  const safeRows = rows.map((row) =>
-    tableHeaders.map((header, colIndex) => ({
-      header,
-      value: row[colIndex]?.trim() || SAFE_TEXT_FALLBACK,
-    })),
-  )
 
   if (tableHeaders.length > 0 && rows.length > 0) {
+    // ⚡ Bolt: Removed safeRows intermediate array allocation to save memory.
+    // Index-based keys replace expensive O(N) string concatenations per row.
     return (
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse break-words text-left text-sm text-graphite/85 sm:text-base">
           <thead>
             <tr>
-              {tableHeaders.map((header) => (
+              {tableHeaders.map((header, index) => (
                 <th
-                  key={header}
+                  key={`${header}-${index}`}
                   scope="col"
                   className="border-b border-border/80 px-3 py-2 font-semibold text-graphite/80"
                 >
@@ -104,13 +100,16 @@ export function renderCompare(section: AnswerSectionData) {
             </tr>
           </thead>
           <tbody>
-            {safeRows.map((row) => (
-              <tr key={row.map((cell) => `${cell.header}:${cell.value}`).join('|')} className="align-top">
-                {row.map((cell) => (
-                  <td key={`${cell.header}-${cell.value}`} className="border-b border-border/60 px-3 py-2">
-                    {cell.value}
-                  </td>
-                ))}
+            {rows.map((row, rowIndex) => (
+              <tr key={`row-${rowIndex}`} className="align-top">
+                {tableHeaders.map((_, colIndex) => {
+                  const value = row[colIndex]?.trim() || SAFE_TEXT_FALLBACK
+                  return (
+                    <td key={`${rowIndex}-${colIndex}`} className="border-b border-border/60 px-3 py-2">
+                      {value}
+                    </td>
+                  )
+                })}
               </tr>
             ))}
           </tbody>
