@@ -129,7 +129,10 @@ export const AnswerSection = memo(function AnswerSection({ section }: AnswerSect
         <Icon className={clsx('h-4 w-4', iconColor)} aria-hidden="true" />
         <span>{section.title ?? meta.label}</span>
         {isLegacy && (
-          <Clock className="ml-1 h-3 w-3 text-graphite/40" aria-label="Устаревший формат" />
+          <>
+            <span className="sr-only">{t('section.legacyFormat')}</span>
+            <Clock className="ml-1 h-3 w-3 text-graphite/40" aria-hidden="true" />
+          </>
         )}
       </h4>
       <ErrorBoundary variant="inline">

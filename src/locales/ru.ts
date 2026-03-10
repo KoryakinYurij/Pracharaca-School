@@ -51,6 +51,7 @@ export const ru = {
     'section.compare': 'Сравнение',
     'section.mnemonic': 'Запоминалка',
     'section.references': 'Источники',
+    'section.legacyFormat': 'Устаревший формат',
 
     // Adapters / Fallbacks
     'fallback.noData': 'Нет данных',
