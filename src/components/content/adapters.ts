@@ -164,9 +164,25 @@ export function adaptColumns(
 }
 
 function normalizeTableRows(rows: AnswerTableData['rows']): string[][] {
-  return rows
-    .map((row) => row.map((cell) => normalizeText(cell)))
-    .filter((row) => row.some(Boolean))
+  // Use a consolidated for loop instead of chained .map().filter()
+  // to avoid intermediate array allocations and redundant iterations
+  const result: string[][] = []
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i]
+    const newRow: string[] = []
+    let hasData = false
+    for (let j = 0; j < row.length; j++) {
+      const cell = normalizeText(row[j])
+      newRow.push(cell)
+      if (cell) {
+        hasData = true
+      }
+    }
+    if (hasData) {
+      result.push(newRow)
+    }
+  }
+  return result
 }
 
 export function normalizeTable(table?: AnswerTableData): ComparisonTable | null {
