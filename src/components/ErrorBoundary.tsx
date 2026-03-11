@@ -48,7 +48,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <button
             type="button"
             onClick={this.handleRetry}
-            className="ml-auto text-xs font-medium text-gold-dark underline decoration-gold/30 underline-offset-2 hover:decoration-gold"
+            className="focus-ring ml-auto rounded-sm text-xs font-medium text-gold-dark underline decoration-gold/30 underline-offset-2 hover:decoration-gold"
           >
             {t('error.retry')}
           </button>
@@ -76,7 +76,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <button
             type="button"
             onClick={this.handleReload}
-            className="group inline-flex items-center gap-2 rounded-full border border-gold/50 bg-white px-8 py-3 font-body text-sm font-medium text-gold-dark transition-all duration-300 hover:bg-gold hover:text-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold/50 active:scale-95"
+            className="focus-ring group inline-flex items-center gap-2 rounded-full border border-gold/50 bg-white px-8 py-3 font-body text-sm font-medium text-gold-dark transition-all duration-300 hover:bg-gold hover:text-white hover:shadow-lg active:scale-95"
           >
             <RefreshCw size={18} className="transition-transform duration-500 group-hover:rotate-180" aria-hidden="true" />
             {t('error.reload')}
