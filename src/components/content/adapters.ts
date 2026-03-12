@@ -83,12 +83,23 @@ export function adaptItems(section: Pick<AnswerSectionData, 'items' | 'body'>, o
 }
 
 export function normalizePairs(pairs?: AnswerPairData[]): AnswerPairData[] {
-  return (pairs ?? [])
-    .map((pair) => ({
-      term: normalizeText(pair.term),
-      desc: normalizeText(pair.desc),
-    }))
-    .filter((pair) => pair.term || pair.desc)
+  if (!pairs) {
+    return []
+  }
+
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: AnswerPairData[] = []
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i]
+    const term = normalizeText(pair.term)
+    const desc = normalizeText(pair.desc)
+
+    if (term || desc) {
+      result.push({ term, desc })
+    }
+  }
+
+  return result
 }
 
 export function adaptGlossaryProps(
@@ -164,9 +175,28 @@ export function adaptColumns(
 }
 
 function normalizeTableRows(rows: AnswerTableData['rows']): string[][] {
-  return rows
-    .map((row) => row.map((cell) => normalizeText(cell)))
-    .filter((row) => row.some(Boolean))
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[][] = []
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i]
+    const newRow: string[] = []
+    let hasContent = false
+
+    for (let j = 0; j < row.length; j++) {
+      const text = normalizeText(row[j])
+      newRow.push(text)
+      if (text) {
+        hasContent = true
+      }
+    }
+
+    if (hasContent) {
+      result.push(newRow)
+    }
+  }
+
+  return result
 }
 
 export function normalizeTable(table?: AnswerTableData): ComparisonTable | null {
