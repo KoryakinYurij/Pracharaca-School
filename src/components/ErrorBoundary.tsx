@@ -48,7 +48,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <button
             type="button"
             onClick={this.handleRetry}
-            className="ml-auto text-xs font-medium text-gold-dark underline decoration-gold/30 underline-offset-2 hover:decoration-gold"
+            className="focus-ring ml-auto rounded-sm text-xs font-medium text-gold-dark underline decoration-gold/30 underline-offset-2 hover:decoration-gold"
           >
             {t('error.retry')}
           </button>
