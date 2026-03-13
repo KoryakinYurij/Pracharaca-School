@@ -33,7 +33,7 @@ export function TopicsListingPage() {
           <Link
             to="/kitchen-sink"
             data-testid="dev-kitchen-link"
-            className="inline-flex items-center gap-2 rounded-md bg-graphite/10 px-3 py-1.5 text-xs font-medium text-graphite/70 transition-colors hover:bg-graphite/20 hover:text-graphite"
+            className="focus-ring inline-flex items-center gap-2 rounded-md bg-graphite/10 px-3 py-1.5 text-xs font-medium text-graphite/70 transition-colors hover:bg-graphite/20 hover:text-graphite"
           >
             <span>🔧 DEV: Kitchen Sink Demo</span>
           </Link>
