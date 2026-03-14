@@ -19,7 +19,15 @@ export function getText(section: AnswerSectionData) {
 }
 
 export function normalizeItems(items?: string[]) {
-  return (items ?? []).map((item) => item.trim()).filter(Boolean)
+  if (!items) return []
+  const result: string[] = []
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i].trim()
+    if (item) {
+      result.push(item)
+    }
+  }
+  return result
 }
 
 export function renderText(section: AnswerSectionData, className?: string) {
@@ -56,12 +64,16 @@ export function renderColumns(
 }
 
 export function renderDosDonts(section: AnswerSectionData) {
-  const columns = (section.columns ?? [])
-    .map((column) => ({
-      title: column.title.trim(),
-      items: normalizeItems(column.items),
-    }))
-    .filter((column) => column.title || column.items.length > 0)
+  const columns: { title: string; items: string[] }[] = []
+  const sectionColumns = section.columns ?? []
+  for (let i = 0; i < sectionColumns.length; i++) {
+    const column = sectionColumns[i]
+    const title = column.title.trim()
+    const items = normalizeItems(column.items)
+    if (title || items.length > 0) {
+      columns.push({ title, items })
+    }
+  }
 
   if (columns.length === 0) {
     return renderText(section)
@@ -117,12 +129,16 @@ export function renderCompare(section: AnswerSectionData) {
     )
   }
 
-  const columns = (section.columns ?? [])
-    .map((column) => ({
-      title: column.title.trim(),
-      items: normalizeItems(column.items),
-    }))
-    .filter((column) => column.title || column.items.length > 0)
+  const columns: { title: string; items: string[] }[] = []
+  const sectionColumns = section.columns ?? []
+  for (let i = 0; i < sectionColumns.length; i++) {
+    const column = sectionColumns[i]
+    const title = column.title.trim()
+    const items = normalizeItems(column.items)
+    if (title || items.length > 0) {
+      columns.push({ title, items })
+    }
+  }
 
   if (columns.length > 0) {
     return renderColumns(
