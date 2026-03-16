@@ -45,14 +45,36 @@ export function toSafeText(text?: string): string {
 }
 
 export function normalizeStringItems(items?: readonly string[]): string[] {
-  return (items ?? []).map((item) => normalizeText(item)).filter(Boolean)
+  if (!items) {
+    return []
+  }
+
+  const result: string[] = []
+  for (let i = 0; i < items.length; i++) {
+    const item = normalizeText(items[i])
+    if (item) {
+      result.push(item)
+    }
+  }
+
+  return result
 }
 
 export function splitBodyLines(body?: string): string[] {
-  return (body ?? '')
-    .split(/\n+/)
-    .map((item) => normalizeText(item))
-    .filter(Boolean)
+  if (!body) {
+    return []
+  }
+
+  const lines = body.split(/\n+/)
+  const result: string[] = []
+  for (let i = 0; i < lines.length; i++) {
+    const item = normalizeText(lines[i])
+    if (item) {
+      result.push(item)
+    }
+  }
+
+  return result
 }
 
 export function adaptBody(section: Pick<AnswerSectionData, 'body'>, options?: AdapterOptions): string {
@@ -142,12 +164,22 @@ export function adaptTimelineProps(
 }
 
 export function normalizeColumns(columns?: AnswerColumnData[]): ComparisonColumn[] {
-  return (columns ?? [])
-    .map((column) => ({
-      title: normalizeText(column.title),
-      items: normalizeStringItems(column.items),
-    }))
-    .filter((column) => column.title || column.items.length > 0)
+  if (!columns) {
+    return []
+  }
+
+  const result: ComparisonColumn[] = []
+  for (let i = 0; i < columns.length; i++) {
+    const column = columns[i]
+    const title = normalizeText(column.title)
+    const items = normalizeStringItems(column.items)
+
+    if (title || items.length > 0) {
+      result.push({ title, items })
+    }
+  }
+
+  return result
 }
 
 export function adaptColumns(
