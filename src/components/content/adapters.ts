@@ -45,14 +45,30 @@ export function toSafeText(text?: string): string {
 }
 
 export function normalizeStringItems(items?: readonly string[]): string[] {
-  return (items ?? []).map((item) => normalizeText(item)).filter(Boolean)
+  if (!items) return []
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[] = []
+  for (let i = 0; i < items.length; i++) {
+    const trimmed = normalizeText(items[i])
+    if (trimmed) {
+      result.push(trimmed)
+    }
+  }
+  return result
 }
 
 export function splitBodyLines(body?: string): string[] {
-  return (body ?? '')
-    .split(/\n+/)
-    .map((item) => normalizeText(item))
-    .filter(Boolean)
+  if (!body) return []
+  const lines = body.split(/\n+/)
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[] = []
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = normalizeText(lines[i])
+    if (trimmed) {
+      result.push(trimmed)
+    }
+  }
+  return result
 }
 
 export function adaptBody(section: Pick<AnswerSectionData, 'body'>, options?: AdapterOptions): string {

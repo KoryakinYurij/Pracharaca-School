@@ -19,7 +19,16 @@ export function getText(section: AnswerSectionData) {
 }
 
 export function normalizeItems(items?: string[]) {
-  return (items ?? []).map((item) => item.trim()).filter(Boolean)
+  if (!items) return []
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[] = []
+  for (let i = 0; i < items.length; i++) {
+    const trimmed = items[i].trim()
+    if (trimmed) {
+      result.push(trimmed)
+    }
+  }
+  return result
 }
 
 export function renderText(section: AnswerSectionData, className?: string) {
