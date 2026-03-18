@@ -45,14 +45,39 @@ export function toSafeText(text?: string): string {
 }
 
 export function normalizeStringItems(items?: readonly string[]): string[] {
-  return (items ?? []).map((item) => normalizeText(item)).filter(Boolean)
+  if (!items) {
+    return []
+  }
+
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[] = []
+  for (let i = 0; i < items.length; i++) {
+    const item = normalizeText(items[i])
+    if (item) {
+      result.push(item)
+    }
+  }
+
+  return result
 }
 
 export function splitBodyLines(body?: string): string[] {
-  return (body ?? '')
-    .split(/\n+/)
-    .map((item) => normalizeText(item))
-    .filter(Boolean)
+  if (!body) {
+    return []
+  }
+
+  const lines = body.split(/\n+/)
+
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: string[] = []
+  for (let i = 0; i < lines.length; i++) {
+    const line = normalizeText(lines[i])
+    if (line) {
+      result.push(line)
+    }
+  }
+
+  return result
 }
 
 export function adaptBody(section: Pick<AnswerSectionData, 'body'>, options?: AdapterOptions): string {
@@ -142,12 +167,23 @@ export function adaptTimelineProps(
 }
 
 export function normalizeColumns(columns?: AnswerColumnData[]): ComparisonColumn[] {
-  return (columns ?? [])
-    .map((column) => ({
-      title: normalizeText(column.title),
-      items: normalizeStringItems(column.items),
-    }))
-    .filter((column) => column.title || column.items.length > 0)
+  if (!columns) {
+    return []
+  }
+
+  // Avoid chaining .map().filter() to prevent intermediate array allocations and redundant iterations
+  const result: ComparisonColumn[] = []
+  for (let i = 0; i < columns.length; i++) {
+    const column = columns[i]
+    const title = normalizeText(column.title)
+    const items = normalizeStringItems(column.items)
+
+    if (title || items.length > 0) {
+      result.push({ title, items })
+    }
+  }
+
+  return result
 }
 
 export function adaptColumns(
