@@ -59,7 +59,10 @@ export function PrincipleBlock({ children, icon, className }: PrincipleBlockProp
       )}
     >
       {icon && (
-        <div className="pointer-events-none absolute right-2 top-2 h-24 w-24 text-gold opacity-10 [&>svg]:h-full [&>svg]:w-full">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-2 top-2 h-24 w-24 text-gold opacity-10 [&>svg]:h-full [&>svg]:w-full"
+        >
           {icon}
         </div>
       )}

@@ -63,7 +63,10 @@ export function IconBackgroundCard({ icon, children, className }: IconBackground
         className,
       )}
     >
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 text-gold opacity-5 [&>svg]:h-full [&>svg]:w-full">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 text-gold opacity-5 [&>svg]:h-full [&>svg]:w-full"
+      >
         {icon}
       </div>
 
