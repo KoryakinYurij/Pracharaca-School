@@ -14,14 +14,15 @@ export interface StepTimelineProps {
 
 export function StepTimeline({ steps, className }: StepTimelineProps) {
   return (
-    <div className={clsx('relative ml-4 space-y-12 border-l-2 border-border/50 pl-8', className)}>
+    <ol className={clsx('relative ml-4 space-y-12 border-l-2 border-border/50 pl-8', className)} role="list">
       {steps.map((step, index) => (
-        <div key={step.title || `step-${index}`} className="relative group">
+        <li key={step.title || `step-${index}`} className="relative group list-none">
           <div className="absolute -left-[2.25rem] top-0 h-4 w-4 rounded-full border-2 border-gold bg-ivory transition-colors duration-300 group-hover:bg-gold" />
 
           <div className="relative overflow-hidden rounded-xl2 bg-ivory p-8 shadow-card transition-transform duration-300 hover:-translate-y-1">
             <div
               className="pointer-events-none absolute right-4 top-0 select-none text-[6rem] font-display font-bold leading-none text-graphite opacity-5"
+              aria-hidden="true"
             >
               {index + 1}
             </div>
@@ -31,9 +32,9 @@ export function StepTimeline({ steps, className }: StepTimelineProps) {
             )}
             <div className="relative z-10 font-body leading-relaxed text-graphite/90">{step.content}</div>
           </div>
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   )
 }
 
