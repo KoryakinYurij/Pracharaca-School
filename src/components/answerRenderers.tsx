@@ -19,7 +19,17 @@ export function getText(section: AnswerSectionData) {
 }
 
 export function normalizeItems(items?: string[]) {
-  return (items ?? []).map((item) => item.trim()).filter(Boolean)
+  // Use a single consolidated for loop instead of chained .map().filter()
+  // to avoid intermediate array allocations and redundant iterations
+  const result: string[] = []
+  const safeItems = items ?? []
+  for (let i = 0; i < safeItems.length; i++) {
+    const trimmed = safeItems[i].trim()
+    if (trimmed) {
+      result.push(trimmed)
+    }
+  }
+  return result
 }
 
 export function renderText(section: AnswerSectionData, className?: string) {
